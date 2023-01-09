@@ -2,28 +2,37 @@
 #define ANIMATION_HPP
 
 #include <vector>
-struct FrameData {
-  int id;                    // id supplied from allocator
-  int x;                     // x position in sprite sheet
-  int y;                     // y position in sprite sheet
-  int width;                 // width position in sprite sheet
-  int height;                // height position in sprite sheet
+struct SpriteFrameData {
+  int id;                         // id supplied from allocator
+  int framex;                     // x position in sprite sheet
+  int framey;                     // y position in sprite sheet
+  int framewidth;                 // width position in sprite sheet
+  int frameheight;                // height position in sprite sheet
+  int sourceSizex;
+  int sourceSizey;
+  int sourceSizewidth;
+  int sourceSizeheight;
+  bool isRotated;
   float displayTimeSeconds;  // time from is displayed for
 };
 
+
+// Animation class defines and creates animations
+// an animation is a collection of "Frames"
+// a Frame is position information witin an atlas
 class Animation {
  public:
   Animation();
   void AddFrame(int textureID, int x, int y, int width, int height,
                 float frameTime);
-  void AddFrame(FrameData frameData);
-  const FrameData* GetCurrentFrame() const;
+  void AddFrameList(std::vector<SpriteFrameData> frameList);
+  const SpriteFrameData* GetCurrentFrame() const;
   bool UpdateFrame(float deltaTime);
   void Reset();
 
  private:
   void IncrementFrame();
-  std::vector<FrameData> frames;
+  std::vector<SpriteFrameData> frames;
   int currentFrame;
   float currentFrameTime;
 };

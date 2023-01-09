@@ -13,14 +13,14 @@
 #include "ResourceAllocator.hpp"
 #include "WorkingDirectory.hpp"
 
-SceneGame::SceneGame(WorkingDirectory& workingDir,
-                     ResourceAllocator<sf::Texture>& textureAllocator)
+SceneGame::SceneGame(WorkingDirectory &workingDir,
+                     ResourceAllocator<sf::Texture> &textureAllocator)
     : assetsDir(workingDir), textureAllocator(textureAllocator) {}
 
 void SceneGame::OnCreate() {
   // create a temporary player object
   std::shared_ptr<Object> player = std::make_shared<Object>();
-  player->transform->SetPosition(200.f, 200.f);  // set a starting position
+  player->transform->SetPosition(0.f, 0.f); // set a starting position
 
   // Add a sprite component to the player
   auto sprite = player->AddComponent<CSprite>();
@@ -45,13 +45,14 @@ void SceneGame::OnCreate() {
   // add sprites to annimation
   std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>();
 
-  // testing frame loader
+  // // testing frame loader
   FrameLoader frameLoader;
   frameLoader.LoadJson(
       assetsDir.Get() +
       "characters/Wagner/WagnerSpritesheet/WagnerSpriteSheet.json");
-  idleAnimation =
-      frameLoader.CreateAnimation(wagnerSpriteSheetId, "WagnerIdle");
+  std::vector<SpriteFrameData> wagnerIdleFrameList =
+      frameLoader.CreateSpriteFrameData(wagnerSpriteSheetId, "WagnerIdle", .1f);
+  idleAnimation->AddFrameList(wagnerIdleFrameList);
 
   animation->AddAnimation(AnimationState::Idle, idleAnimation);
 
@@ -68,4 +69,4 @@ void SceneGame::Update(float deltaTime) {
   objects.ProcessNewObjects();
   objects.Update(deltaTime);
 }
-void SceneGame::Draw(Window& window) { objects.Draw(window); }
+void SceneGame::Draw(Window &window) { objects.Draw(window); }

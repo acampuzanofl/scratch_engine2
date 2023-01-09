@@ -6,6 +6,8 @@
 #include <iostream>
 #include <memory>
 
+#include "Animation.hpp"
+#include "CAnimation.hpp"
 #include "Component.hpp"
 #include "Object.hpp"
 
@@ -36,14 +38,36 @@ void CSprite::Load(const std::string &filePath) {
 
 void CSprite::LateUpdate(float deltaTime) {
   sf::Vector2f pos = owner->transform->GetPosition();
-  const sf::IntRect &spriteBounds = sprite.getTextureRect();
-  const sf::Vector2f &spriteScale = sprite.getScale();
-  sprite.setPosition(  // set position based on center of sprite
-      pos.x - ((abs(spriteBounds.width) * 0.5f) * spriteScale.x),
-      pos.y - ((abs(spriteBounds.height) * 0.5f) * spriteScale.y));
+  std::shared_ptr<CAnimation> currentAnimation =
+      owner->GetComponent<CAnimation>();
+  const SpriteFrameData *currentFrame =
+      currentAnimation->GetCurrentAnimation()->GetCurrentFrame();
+  // if (currentFrame->isRotated) {
+  //   sprite.setRotation(-90.f);
+  //   // pos.y += currentFrame->sourceSizeheight;
+  //   pos.y += (currentFrame->frameheight);
+  // } else {
+  //   sprite.setRotation(0.f);
+  // }
+  pos.x += currentFrame->sourceSizex;
+  pos.y += currentFrame->sourceSizey;
+  sprite.setPosition(pos);
 }
 
-void CSprite::Draw(Window &window) { window.Draw(sprite); }
+void CSprite::Draw(Window &window) {
+  window.Draw(sprite);
+
+  // debug sprite
+  // sf::FloatRect boundingRect = sprite.getLocalBounds();
+  // sf::RectangleShape rect(
+  //     sf::Vector2f(boundingRect.width, boundingRect.height));
+
+  // rect.setPosition(sprite.getPosition());
+  // rect.setFillColor(sf::Color(0, 0, 0, 0));
+  // rect.setOutlineColor(sf::Color::Red);
+  // rect.setOutlineThickness(1.0f);
+  // window.Draw(rect);
+}
 
 void CSprite::SetTextureRect(int x, int y, int width, int height) {
   sprite.setTextureRect(sf::IntRect(x, y, width, height));
@@ -51,9 +75,4 @@ void CSprite::SetTextureRect(int x, int y, int width, int height) {
 
 void CSprite::SetTextureRect(const sf::IntRect &rect) {
   sprite.setTextureRect(rect);
-}
-
-void CSprite::SetPivot(int x, int y) {
-  sf::Vector2f position = owner->transform->GetPosition();
-  sprite.setPosition(position.x + x, position.y + y);
 }

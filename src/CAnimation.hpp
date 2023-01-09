@@ -9,6 +9,8 @@
 #include "CSprite.hpp"
 #include "Component.hpp"
 
+// CAnimation Is responsible for setting and updating animation for the owner
+// The owner must have a CSprite
 enum class AnimationState { None, Idle, Walk };
 
 class CAnimation : public Component {
@@ -18,7 +20,8 @@ class CAnimation : public Component {
   void Update(float deltaTime) override;
   void AddAnimation(AnimationState state, std::shared_ptr<Animation> animation);
   void SetAnimationState(AnimationState state);
-  const AnimationState& GetAnimationState() const;
+  const AnimationState& GetCurrentAnimationState() const;
+  const std::shared_ptr<Animation>& GetCurrentAnimation() const;
 
  private:
   std::shared_ptr<CSprite> sprite;

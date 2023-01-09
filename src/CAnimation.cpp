@@ -1,13 +1,14 @@
 #include "CAnimation.hpp"
 
 #include <iostream>
+#include <memory>
 #include <utility>
 
 #include "Animation.hpp"
 #include "Component.hpp"
 #include "Object.hpp"
 
-CAnimation::CAnimation(Object* owner)
+CAnimation::CAnimation(Object *owner)
     : Component(owner), currentAnimation(AnimationState::None, nullptr) {}
 
 void CAnimation::Awake() { sprite = owner->GetComponent<CSprite>(); }
@@ -16,11 +17,12 @@ void CAnimation::Update(float deltaTime) {
   if (currentAnimation.first != AnimationState::None) {
     bool newFrame = currentAnimation.second->UpdateFrame(deltaTime);
     if (newFrame) {
-      const FrameData* data = currentAnimation.second->GetCurrentFrame();
-      sprite->Load(data->id);
-      sprite->SetTextureRect(data->x, data->y, data->width, data->height);
-      // debug
-      // sprite->SetPivot(data->pivotx, date->pivoty);
+      const SpriteFrameData *currentFrame =
+          currentAnimation.second->GetCurrentFrame();
+      sprite->Load(currentFrame->id);
+      sprite->SetTextureRect(currentFrame->framex, currentFrame->framey,
+                             currentFrame->framewidth,
+                             currentFrame->frameheight);
     }
   }
 }
@@ -45,6 +47,10 @@ void CAnimation::SetAnimationState(AnimationState state) {
   }
 }
 
-const AnimationState& CAnimation::GetAnimationState() const {
+const AnimationState &CAnimation::GetCurrentAnimationState() const {
   return currentAnimation.first;
+}
+
+const std::shared_ptr<Animation> &CAnimation::GetCurrentAnimation() const {
+  return currentAnimation.second;
 }

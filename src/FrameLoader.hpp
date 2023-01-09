@@ -2,6 +2,7 @@
 #define frameloader_hpp
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "Animation.hpp"
 #include "json.hpp"
@@ -11,8 +12,8 @@ class FrameLoader {
  public:
   FrameLoader();
   void LoadJson(const std::string& fileName);
-  std::shared_ptr<Animation> CreateAnimation(int textureId,
-                                             const std::string& animationName);
+  std::vector<SpriteFrameData> CreateSpriteFrameData(int textureId,
+                                             const std::string& animationName, float animationSpeed);
   std::map<std::string, json> GetFrames(const std::string& animationName);
 
  private:

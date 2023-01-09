@@ -4,19 +4,19 @@ Animation::Animation() : frames(0), currentFrame(0), currentFrameTime(0) {}
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height,
                          float frameTIme) {
-  FrameData data;
+  SpriteFrameData data = {0};
   data.id = textureID;
-  data.x = x;
-  data.y = y;
-  data.width = width;
-  data.height = height;
+  data.framex = x;
+  data.framey = y;
+  data.framewidth = width;
+  data.frameheight = height;
   data.displayTimeSeconds = frameTIme;
   frames.push_back(data);
 }
 
-void Animation::AddFrame(FrameData frameData) { frames.push_back(frameData); }
+void Animation::AddFrameList(std::vector<SpriteFrameData> frameData) { frames = frameData; }
 
-const FrameData* Animation::GetCurrentFrame() const {
+const SpriteFrameData* Animation::GetCurrentFrame() const {
   if (frames.size() > 0) {
     return &frames[currentFrame];
   }
