@@ -12,24 +12,27 @@
 #include "ObjectCollection.hpp"
 #include "ResourceAllocator.hpp"
 #include "Scene.hpp"
+#include "SpriteMap.hpp"
 #include "Window.hpp"
 #include "WorkingDirectory.hpp"
 
 class SceneGame : public Scene {
  public:
-  SceneGame(WorkingDirectory& workingDir,
-            ResourceAllocator<sf::Texture>& textureAllocator);
+  SceneGame(WorkingDirectory &workingDir,
+            ResourceAllocator<sf::Texture> &textureAllocator,
+            ResourceAllocator<SpriteMap> &spriteMap);
   void OnCreate() override;
   void OnDestroy() override;
   void OnActivate() override;
   void ProcessInput() override;
   void LateUpdate(float deltaTime) override;
   void Update(float deltaTime) override;
-  void Draw(Window& window) override;
+  void Draw(Window &window) override;
 
  private:
-  ResourceAllocator<sf::Texture>& textureAllocator;
-  WorkingDirectory& assetsDir;
+  ResourceAllocator<sf::Texture> &textureAllocator;
+  ResourceAllocator<SpriteMap> &spriteMapAllocator;
+  WorkingDirectory &assetsDir;
   Input input;
   ObjectCollection objects;
 };

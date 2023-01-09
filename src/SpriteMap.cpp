@@ -1,4 +1,4 @@
-#include "FrameLoader.hpp"
+#include "SpriteMap.hpp"
 
 #include <algorithm>
 #include <fstream>
@@ -10,15 +10,20 @@
 
 #include "Animation.hpp"
 
-FrameLoader::FrameLoader() {}
+SpriteMap::SpriteMap() {}
 
-void FrameLoader::LoadJson(const std::string &fileName) {
+bool SpriteMap::loadFromFile(const std::string &fileName) {
   std::fstream f(fileName);
   jsonData = json::parse(f);
+
+  if (jsonData == nullptr) {
+    return false;
+  }
+  return true;
 }
 
-std::map<std::string, json>
-FrameLoader::GetFrames(const std::string &animationName) {
+std::map<std::string, json> SpriteMap::GetFrames(
+    const std::string &animationName) {
   std::shared_ptr<Animation> animation = std::make_shared<Animation>();
 
   //   std::vector<std::string> sorted;
@@ -34,12 +39,12 @@ FrameLoader::GetFrames(const std::string &animationName) {
   return sorted;
 }
 
-std::vector<SpriteFrameData> FrameLoader::CreateSpriteFrameData(
+std::vector<SpriteMapData> SpriteMap::CreateSpriteMapData(
     int textureId, const std::string &animationName, float animationSpeed) {
   auto frames = GetFrames(animationName);
 
-  std::vector<SpriteFrameData> frameDataList;
-  SpriteFrameData frameData;
+  std::vector<SpriteMapData> frameDataList;
+  SpriteMapData frameData;
   for (auto &it : frames) {
     frameData.id = textureId;
     frameData.framex = std::stoi(it.second["frame"]["x"].dump());

@@ -10,6 +10,7 @@
 #include "SceneGame.hpp"
 #include "SceneSplashScreen.hpp"
 #include "SceneStateMachine.hpp"
+#include "SpriteMap.hpp"
 #include "Window.hpp"
 #include "WorkingDirectory.hpp"
 
@@ -30,7 +31,8 @@ class Game {
   sf::Clock clock;
   float deltaTime;
   SceneStateMachine sceneStateMachine;
-  ResourceAllocator<sf::Texture> allocator;
+  ResourceAllocator<sf::Texture> textureAllocator;
+  ResourceAllocator<SpriteMap> spriteMapAllocator;
 };
 
 #endif

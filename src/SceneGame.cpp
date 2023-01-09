@@ -9,24 +9,27 @@
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
 #include "Component.hpp"
-#include "FrameLoader.hpp"
 #include "ResourceAllocator.hpp"
+#include "SpriteMap.hpp"
 #include "WorkingDirectory.hpp"
 
 SceneGame::SceneGame(WorkingDirectory &workingDir,
-                     ResourceAllocator<sf::Texture> &textureAllocator)
-    : assetsDir(workingDir), textureAllocator(textureAllocator) {}
+                     ResourceAllocator<sf::Texture> &textureAllocator,
+                     ResourceAllocator<SpriteMap> &spriteMapAllocator)
+    : assetsDir(workingDir),
+      textureAllocator(textureAllocator),
+      spriteMapAllocator(spriteMapAllocator) {}
 
 void SceneGame::OnCreate() {
   // create a temporary player object
   std::shared_ptr<Object> player = std::make_shared<Object>();
-  player->transform->SetPosition(0.f, 0.f); // set a starting position
+  player->transform->SetPosition(0.f, 0.f);  // set a starting position
 
   // Add a sprite component to the player
   auto sprite = player->AddComponent<CSprite>();
 
-  // set allocator for csprite component
-  sprite->SetTextureAllocator(&textureAllocator);
+  // set texture allocator for csprite component
+  sprite->SetAllocator(&textureAllocator);
 
   // add movement component for player
   auto movement = player->AddComponent<CKeyboardMovement>();
@@ -46,12 +49,12 @@ void SceneGame::OnCreate() {
   std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>();
 
   // // testing frame loader
-  FrameLoader frameLoader;
-  frameLoader.LoadJson(
+  SpriteMap frameLoader;
+  frameLoader.loadFromFile(
       assetsDir.Get() +
       "characters/Wagner/WagnerSpritesheet/WagnerSpriteSheet.json");
-  std::vector<SpriteFrameData> wagnerIdleFrameList =
-      frameLoader.CreateSpriteFrameData(wagnerSpriteSheetId, "WagnerIdle", .1f);
+  std::vector<SpriteMapData> wagnerIdleFrameList =
+      frameLoader.CreateSpriteMapData(wagnerSpriteSheetId, "WagnerIdle", .1f);
   idleAnimation->AddFrameList(wagnerIdleFrameList);
 
   animation->AddAnimation(AnimationState::Idle, idleAnimation);

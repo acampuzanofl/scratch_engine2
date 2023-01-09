@@ -4,7 +4,7 @@ Animation::Animation() : frames(0), currentFrame(0), currentFrameTime(0) {}
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height,
                          float frameTIme) {
-  SpriteFrameData data = {0};
+  SpriteMapData data = {0};
   data.id = textureID;
   data.framex = x;
   data.framey = y;
@@ -14,9 +14,11 @@ void Animation::AddFrame(int textureID, int x, int y, int width, int height,
   frames.push_back(data);
 }
 
-void Animation::AddFrameList(std::vector<SpriteFrameData> frameData) { frames = frameData; }
+void Animation::AddFrameList(std::vector<SpriteMapData> frameData) {
+  frames = frameData;
+}
 
-const SpriteFrameData* Animation::GetCurrentFrame() const {
+const SpriteMapData* Animation::GetCurrentFrame() const {
   if (frames.size() > 0) {
     return &frames[currentFrame];
   }

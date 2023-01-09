@@ -7,6 +7,7 @@
 #include "Animation.hpp"
 #include "Component.hpp"
 #include "Object.hpp"
+#include "SpriteMap.hpp"
 
 CAnimation::CAnimation(Object *owner)
     : Component(owner), currentAnimation(AnimationState::None, nullptr) {}
@@ -17,7 +18,7 @@ void CAnimation::Update(float deltaTime) {
   if (currentAnimation.first != AnimationState::None) {
     bool newFrame = currentAnimation.second->UpdateFrame(deltaTime);
     if (newFrame) {
-      const SpriteFrameData *currentFrame =
+      const SpriteMapData *currentFrame =
           currentAnimation.second->GetCurrentFrame();
       sprite->Load(currentFrame->id);
       sprite->SetTextureRect(currentFrame->framex, currentFrame->framey,

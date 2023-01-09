@@ -5,14 +5,15 @@
 
 #include "SceneGame.hpp"
 #include "SceneSplashScreen.hpp"
+#include "SpriteMap.hpp"
 
 Game::Game() : window("scratch engine"), workingDir("assets") {
   // initialize scenes
   std::shared_ptr<SceneSplashScreen> splashScreen =
       std::make_shared<SceneSplashScreen>(workingDir, sceneStateMachine, window,
-                                          allocator);
-  std::shared_ptr<SceneGame> gameScene =
-      std::make_shared<SceneGame>(workingDir, allocator);
+                                          textureAllocator);
+  std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>(
+      workingDir, textureAllocator, spriteMapAllocator);
 
   // add scenes to map
   unsigned int splashScreenID = sceneStateMachine.Add(splashScreen);
