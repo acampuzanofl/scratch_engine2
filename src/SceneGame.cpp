@@ -28,10 +28,19 @@ void SceneGame::OnCreate() {
   // Add a sprite component to the player
   auto sprite = player->AddComponent<CSprite>();
 
-  // set texture allocator for csprite component
+  // set texture and spritemap allocator for csprite component
   sprite->SetAllocator(&textureAllocator);
+  sprite->SetAllocator(&spriteMapAllocator);
 
-  // add movement component for player
+  // add texture and sprite map using allocators
+  int wagnerSpriteSheetId = textureAllocator.Add(
+      assetsDir.Get() +
+      "characters/Wagner/WagnerSpriteSheet/WagnerSpriteSheet.png");
+  int wagnerSpriteMapId = spriteMapAllocator.Add(
+      assetsDir.Get() +
+      "characters/Wagner/WagnerSpritesheet/WagnerSpriteSheet.json");
+
+  // add keyboard input component for player
   auto movement = player->AddComponent<CKeyboardMovement>();
 
   // setting input object for movement component
@@ -40,23 +49,12 @@ void SceneGame::OnCreate() {
   // add animation component
   auto animation = player->AddComponent<CAnimation>();
 
-  // add texture using animation component
-  int wagnerSpriteSheetId = textureAllocator.Add(
-      assetsDir.Get() +
-      "characters/Wagner/WagnerSpriteSheet/WagnerSpriteSheet.png");
+  // create an animation using the sprite map and sprite sheet
+  std::shared_ptr<Animation> idleAnimation =
+      sprite->CreateAnimationFromSpriteMap(
+          wagnerSpriteSheetId, wagnerSpriteMapId, "WagnerIdle", .1f);
 
-  // add sprites to annimation
-  std::shared_ptr<Animation> idleAnimation = std::make_shared<Animation>();
-
-  // // testing frame loader
-  SpriteMap frameLoader;
-  frameLoader.loadFromFile(
-      assetsDir.Get() +
-      "characters/Wagner/WagnerSpritesheet/WagnerSpriteSheet.json");
-  std::vector<SpriteMapData> wagnerIdleFrameList =
-      frameLoader.CreateSpriteMapData(wagnerSpriteSheetId, "WagnerIdle", .1f);
-  idleAnimation->AddFrameList(wagnerIdleFrameList);
-
+  // add the created animation to the animation component
   animation->AddAnimation(AnimationState::Idle, idleAnimation);
 
   // add player object to the ObjectCollector

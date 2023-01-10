@@ -66,8 +66,6 @@ void CSprite::Load(const std::string &textureFilePath,
     int spritemapid = spriteMapAllocator->Add(spriteMapFilePath);
     if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
       currentSpriteMapid = spritemapid;
-      std::shared_ptr<SpriteMap> spriteMap =
-          spriteMapAllocator->Get(spritemapid);
     }
   }
 }
@@ -78,13 +76,6 @@ void CSprite::LateUpdate(float deltaTime) {
       owner->GetComponent<CAnimation>();
   const SpriteMapData *currentFrame =
       currentAnimation->GetCurrentAnimation()->GetCurrentFrame();
-  // if (currentFrame->isRotated) {
-  //   sprite.setRotation(-90.f);
-  //   // pos.y += currentFrame->sourceSizeheight;
-  //   pos.y += (currentFrame->frameheight);
-  // } else {
-  //   sprite.setRotation(0.f);
-  // }
   pos.x += currentFrame->sourceSizex;
   pos.y += currentFrame->sourceSizey;
   sprite.setPosition(pos);
@@ -111,4 +102,15 @@ void CSprite::SetTextureRect(int x, int y, int width, int height) {
 
 void CSprite::SetTextureRect(const sf::IntRect &rect) {
   sprite.setTextureRect(rect);
+}
+
+std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
+    int textureId, int spritemapId, const std::string &animationName,
+    float animationSpeed) {
+  std::shared_ptr<SpriteMap> spriteMap = spriteMapAllocator->Get(spritemapId);
+
+  std::shared_ptr<Animation> animation = std::make_shared<Animation>();
+  animation->AddFrameList(
+      spriteMap->CreateSpriteMapData(textureId, animationName, animationSpeed));
+  return animation;
 }

@@ -4,8 +4,10 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <memory>
 #include <string>
 
+#include "Animation.hpp"
 #include "CTransform.hpp"
 #include "Component.hpp"
 #include "ResourceAllocator.hpp"
@@ -31,7 +33,9 @@ class CSprite : public Component {
   void Draw(Window &window) override;
   void SetTextureRect(int x, int y, int width, int height);
   void SetTextureRect(const sf::IntRect &rect);
-  void SetRotation(float rotation);
+  std::shared_ptr<Animation> CreateAnimationFromSpriteMap(
+      int textureId, int spritemapId, const std::string &animatioNname,
+      float animationSpeed);
 
  private:
   ResourceAllocator<sf::Texture> *textureAllocator;
