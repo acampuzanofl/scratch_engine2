@@ -1,6 +1,7 @@
 #include "SpriteMap.hpp"
 
 #include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -26,7 +27,6 @@ std::map<std::string, json> SpriteMap::GetFrames(
     const std::string &animationName) {
   std::shared_ptr<Animation> animation = std::make_shared<Animation>();
 
-  //   std::vector<std::string> sorted;
   std::map<std::string, json> sorted;
   for (const auto &it : jsonData["frames"]) {
     auto filename = it["filename"].dump();
@@ -35,7 +35,13 @@ std::map<std::string, json> SpriteMap::GetFrames(
       sorted[filename] = it;
     }
   }
-
+  if (sorted.empty()) {
+    std::cout << "\033[91merror: \033[0m"
+              << "\"" << animationName << "\""
+              << " was not found in this SpriteMap. And i don't know how to "
+                 "handle errors so i'm just gana close the game :(\n";
+    exit(EXIT_FAILURE);
+  }
   return sorted;
 }
 
