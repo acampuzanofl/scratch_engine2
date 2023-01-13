@@ -53,9 +53,13 @@ void SceneGame::OnCreate() {
   std::shared_ptr<Animation> idleAnimation =
       sprite->CreateAnimationFromSpriteMap(
           wagnerSpriteSheetId, wagnerSpriteMapId, "WagnerIdle", .1f);
+  std::shared_ptr<Animation> walkAnimation =
+      sprite->CreateAnimationFromSpriteMap(
+          wagnerSpriteSheetId, wagnerSpriteMapId, "WagnerWalk", .1f);
 
   // add the created animation to the animation component
   animation->AddAnimation(AnimationState::Idle, idleAnimation);
+  animation->AddAnimation(AnimationState::Walk, walkAnimation);
 
   // add player object to the ObjectCollector
   objects.Add(player);

@@ -1,38 +1,25 @@
 #include "Bitmask.hpp"
+
 #include <cstdint>
 
-Bitmask::Bitmask() : bits(0) {
+Bitmask::Bitmask() : bits(0) {}
 
+void Bitmask::SetMask(Bitmask &other) { bits = other.GetMask(); }
+
+uint32_t Bitmask::GetMask() const { return bits; }
+
+bool Bitmask::GetBit(int pos) const { return (bits & (1 << pos)) != 0; }
+
+void Bitmask::SetBit(int pos, bool on) {
+  if (on) {
+    SetBit(pos);
+  } else {
+    ClearBit(pos);
+  }
 }
 
-void Bitmask::SetMask(Bitmask &other) { 
-    bits = other.GetMask();
-}
+void Bitmask::SetBit(int pos) { bits = bits | (1 << pos); }
 
-uint32_t Bitmask::GetMask() const { 
-    return bits;
-}
+void Bitmask::ClearBit(int pos) { bits = bits & ~(1 << pos); }
 
-bool Bitmask::GetBit(int pos) const { 
-    return (bits & (1 << pos)) != 0;
-}
-
-void Bitmask::SetBit(int pos, bool on) { 
-    if(on) {
-        SetBit(pos);
-    } else {
-        ClearBit(pos);
-    }
-}
-
-void Bitmask::SetBit(int pos) {
-    bits = bits | (1 << pos);
-}
-
-void Bitmask::ClearBit(int pos) {
-    bits = bits & ~(1 << pos);
-}
-
-void Bitmask::Clear() {
-    bits = 0;
-}
+void Bitmask::Clear() { bits = 0; }

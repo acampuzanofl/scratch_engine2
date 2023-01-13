@@ -25,8 +25,6 @@ bool SpriteMap::loadFromFile(const std::string &fileName) {
 
 std::map<std::string, json> SpriteMap::GetFrames(
     const std::string &animationName) {
-  std::shared_ptr<Animation> animation = std::make_shared<Animation>();
-
   std::map<std::string, json> sorted;
   for (const auto &it : jsonData["frames"]) {
     auto filename = it["filename"].dump();

@@ -25,6 +25,14 @@ void CAnimation::Update(float deltaTime) {
                              currentFrame->framewidth,
                              currentFrame->frameheight);
     }
+    // if (currentAnimation.second->GetCurrentFrameIndex() ==
+    //     currentAnimation.second->GetAnimationSize() - 1) {
+    //   if (currentAnimation.first == AnimationState::Idle) {
+    //     SetAnimationState(AnimationState::Walk);
+    //   } else {
+    //     SetAnimationState(AnimationState::Idle);
+    //   }
+    // }
   }
 }
 
@@ -54,4 +62,10 @@ const AnimationState &CAnimation::GetCurrentAnimationState() const {
 
 const std::shared_ptr<Animation> &CAnimation::GetCurrentAnimation() const {
   return currentAnimation.second;
+}
+
+void CAnimation::SetAnimationDirection(FacingDirection dir) {
+  if (currentAnimation.first != AnimationState::None) {
+    currentAnimation.second->SetDirection(dir);
+  }
 }

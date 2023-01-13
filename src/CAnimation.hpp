@@ -22,6 +22,7 @@ class CAnimation : public Component {
   void SetAnimationState(AnimationState state);
   const AnimationState& GetCurrentAnimationState() const;
   const std::shared_ptr<Animation>& GetCurrentAnimation() const;
+  void SetAnimationDirection(FacingDirection dir);
 
  private:
   std::shared_ptr<CSprite> sprite;

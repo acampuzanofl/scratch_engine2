@@ -1,6 +1,7 @@
 #include "CSprite.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
@@ -78,6 +79,7 @@ void CSprite::LateUpdate(float deltaTime) {
       currentAnimation->GetCurrentAnimation()->GetCurrentFrame();
   pos.x += currentFrame->sourceSizex;
   pos.y += currentFrame->sourceSizey;
+  // sprite.setOrigin(400, 320); // sourcewidth and sourcheigth
   sprite.setPosition(pos);
 }
 
@@ -109,7 +111,8 @@ std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
     float animationSpeed) {
   std::shared_ptr<SpriteMap> spriteMap = spriteMapAllocator->Get(spritemapId);
 
-  std::shared_ptr<Animation> animation = std::make_shared<Animation>();
+  std::shared_ptr<Animation> animation =
+      std::make_shared<Animation>(FacingDirection::Right);
   animation->AddFrameList(
       spriteMap->CreateSpriteMapData(textureId, animationName, animationSpeed));
   return animation;
