@@ -1,5 +1,8 @@
 #include "Object.hpp"
 
+#include <memory>
+
+#include "CDrawable.hpp"
 #include "CTransform.hpp"
 
 Object::Object() : queuedForRemoval(false) {
@@ -35,6 +38,8 @@ void Object::LateUpdate(float deltaTime) {
 
 void Object::Draw(Window& window) {
   for (int i = components.size() - 1; i >= 0; i--) {
-    components[i]->Draw(window);
+    drawable->Draw(window);
   }
 }
+
+std::shared_ptr<CDrawable> Object::GetDrawable() { return drawable; }

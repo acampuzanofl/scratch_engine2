@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "CDrawable.hpp"
 #include "CTransform.hpp"
 #include "Component.hpp"
 
@@ -38,8 +39,15 @@ class Object {
     // if the object does not have this component, create it and add it
     std::shared_ptr<T> newComponent = std::make_shared<T>(this);
     components.push_back(newComponent);
+
+    // check if the component is a cdrawable component
+    if (std::dynamic_pointer_cast<CDrawable>(newComponent)) {
+      drawable = std::dynamic_pointer_cast<CDrawable>(newComponent);
+    }
     return newComponent;
   }
+
+  std::shared_ptr<CDrawable> GetDrawable();
 
   template <typename T>
   std::shared_ptr<T> GetComponent() {
@@ -58,6 +66,7 @@ class Object {
 
  private:
   std::vector<std::shared_ptr<Component>> components;
+  std::shared_ptr<CDrawable> drawable;
   bool queuedForRemoval;
 };
 

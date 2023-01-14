@@ -12,7 +12,6 @@ class Component {
   virtual void Start(){};
   virtual void Update(float deltaTime){};
   virtual void LateUpdate(float deltaTime){};
-  virtual void Draw(Window& window){};
 
  protected:
   Object* owner;

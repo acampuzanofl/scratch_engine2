@@ -19,7 +19,7 @@ void ObjectCollection::LateUpdate(float deltaTIme) {
 
 void ObjectCollection::Draw(Window& window) {
   for (auto& o : objects) {
-    o->Draw(window);
+    drawables.Draw(window);
   }
 }
 
@@ -36,6 +36,7 @@ void ObjectCollection::ProcessNewObjects() {
       o->Start();
     }
     objects.insert(objects.end(), newObjects.begin(), newObjects.end());
+    drawables.Add(newObjects);
     newObjects.clear();
   }
 }
@@ -46,4 +47,5 @@ void ObjectCollection::ProcessRemovals() {
                                  return o->IsQueuedForRemoval();
                                }),
                 objects.end());
+  drawables.ProcessRemovals();
 }

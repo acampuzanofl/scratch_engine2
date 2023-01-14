@@ -8,6 +8,7 @@
 #include <string>
 
 #include "Animation.hpp"
+#include "CDrawable.hpp"
 #include "CTransform.hpp"
 #include "Component.hpp"
 #include "ResourceAllocator.hpp"
@@ -17,7 +18,7 @@
 // CSprite provides a drawable sprite for the owner
 // Csprite is responisble for pulling the correct sprite from an atlas
 // and positioning the sprite on the screen
-class CSprite : public Component {
+class CSprite : public Component, public CDrawable {
  public:
   CSprite(Object *owner);
 
