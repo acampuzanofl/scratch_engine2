@@ -62,12 +62,16 @@ void CSprite::Load(const std::string &textureFilePath,
       std::shared_ptr<sf::Texture> texture = textureAllocator->Get(textureID);
       sprite.setTexture(*texture);
     }
+  } else {
+    std::cout << "\033[91mtexture allocator not set\n\033[0m";
   }
   if (spriteMapAllocator) {
     int spritemapid = spriteMapAllocator->Add(spriteMapFilePath);
     if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
       currentSpriteMapid = spritemapid;
     }
+  } else {
+    std::cout << "\033[91mspriteMap allocator not set\n\033[0m";
   }
 }
 
@@ -107,13 +111,13 @@ void CSprite::SetTextureRect(const sf::IntRect &rect) {
 }
 
 std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
-    int textureId, int spritemapId, const std::string &animationName,
-    float animationSpeed) {
-  std::shared_ptr<SpriteMap> spriteMap = spriteMapAllocator->Get(spritemapId);
+    const std::string &animationName, float animationSpeed) {
+  std::shared_ptr<SpriteMap> spriteMap =
+      spriteMapAllocator->Get(currentSpriteMapid);
 
   std::shared_ptr<Animation> animation =
       std::make_shared<Animation>(FacingDirection::Right);
-  animation->AddFrameList(
-      spriteMap->CreateSpriteMapData(textureId, animationName, animationSpeed));
+  animation->AddFrameList(spriteMap->CreateSpriteMapData(
+      currentTextureId, animationName, animationSpeed));
   return animation;
 }

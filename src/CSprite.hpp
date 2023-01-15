@@ -35,8 +35,7 @@ class CSprite : public Component, public CDrawable {
   void SetTextureRect(int x, int y, int width, int height);
   void SetTextureRect(const sf::IntRect &rect);
   std::shared_ptr<Animation> CreateAnimationFromSpriteMap(
-      int textureId, int spritemapId, const std::string &animatioNname,
-      float animationSpeed);
+      const std::string &animationName, float animationSpeed);
 
  private:
   ResourceAllocator<sf::Texture> *textureAllocator;
