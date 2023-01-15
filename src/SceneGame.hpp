@@ -34,6 +34,7 @@ class SceneGame : public Scene {
   ResourceAllocator<SpriteMap> &spriteMapAllocator;
   WorkingDirectory &assetsDir;
   Input input;
+  Input input2;
   ObjectCollection objects;
 };
 

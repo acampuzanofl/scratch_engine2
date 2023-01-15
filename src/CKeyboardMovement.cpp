@@ -1,5 +1,7 @@
 #include "CKeyboardMovement.hpp"
 
+#include <cassert>
+
 #include "Animation.hpp"
 #include "CAnimation.hpp"
 #include "Component.hpp"
@@ -18,9 +20,8 @@ void CKeyboardMovement::SetMovementSpeed(int moveSpeed) {
 }
 
 void CKeyboardMovement::Update(float deltaTime) {
-  if (input == nullptr) {
-    return;
-  }
+  assert(input != nullptr);
+
   // Update movement
   int xMove = 0;
   if (input->IsKeyPressed(Input::Key::Left)) {
