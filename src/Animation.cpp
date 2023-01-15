@@ -1,15 +1,16 @@
 #include "Animation.hpp"
 
+#include <cassert>
+#include <iostream>
+#include <memory>
+
 Animation::Animation(FacingDirection direction)
-    : frames(0),
-      currentFrame(0),
-      currentFrameTime(0.f),
-      currentDirection(direction) {}
+    : currentFrame(0), currentFrameTime(0.f), currentDirection(direction) {}
 
 void Animation::SetDirection(FacingDirection dir) {
   if (currentDirection != dir) {
     currentDirection = dir;
-    for (auto& f : frames) {
+    for (auto& f : *frames) {
       f.framex += f.framewidth;
       f.framewidth *= -1;
     }
@@ -29,34 +30,36 @@ void Animation::AddFrame(int textureID, int x, int y, int width, int height,
   data.framewidth = width;
   data.frameheight = height;
   data.displayTimeSeconds = frameTIme;
-  frames.push_back(data);
+  frames->push_back(data);
 }
 
-void Animation::AddFrameList(std::vector<SpriteMapData> frameData) {
+void Animation::AddFrameList(
+    std::shared_ptr<std::vector<SpriteMapData>> frameData) {
   frames = frameData;
 }
 
 const SpriteMapData* Animation::GetCurrentFrame() const {
-  if (frames.size() > 0) {
-    return &frames[currentFrame];
-  }
-  return nullptr;
+  assert(frames != nullptr);
+  assert(frames->size() > 0);
+
+  return &(*frames)[currentFrame];
 }
 
 bool Animation::UpdateFrame(float deltaTime) {
-  if (frames.size() > 0) {
-    currentFrameTime += deltaTime;
-    if (currentFrameTime >= frames[currentFrame].displayTimeSeconds) {
-      currentFrameTime = 0.f;
-      IncrementFrame();
-      return true;
-    }
+  assert(frames != nullptr);
+  assert(frames->size() > 0);
+
+  currentFrameTime += deltaTime;
+  if (currentFrameTime >= (*frames)[currentFrame].displayTimeSeconds) {
+    currentFrameTime = 0.f;
+    IncrementFrame();
+    return true;
   }
   return false;
 }
 
 void Animation::IncrementFrame() {
-  currentFrame = (currentFrame + 1) % frames.size();
+  currentFrame = (currentFrame + 1) % frames->size();
 }
 
 void Animation::Reset() {
@@ -66,4 +69,4 @@ void Animation::Reset() {
 
 // debugging functions
 const int Animation::GetCurrentFrameIndex() const { return currentFrame; }
-const int Animation::GetAnimationSize() const { return frames.size(); }
+const int Animation::GetAnimationSize() const { return frames->size(); }

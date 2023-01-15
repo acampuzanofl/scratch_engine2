@@ -25,7 +25,7 @@ class SpriteMap {
  public:
   SpriteMap();
   bool loadFromFile(const std::string &fileName);
-  std::vector<SpriteMapData> CreateSpriteMapData(
+  std::shared_ptr<std::vector<SpriteMapData>> CreateSpriteMapData(
       int textureId, const std::string &animationName, float animationSpeed);
   std::map<std::string, json> GetFrames(const std::string &animationName);
 

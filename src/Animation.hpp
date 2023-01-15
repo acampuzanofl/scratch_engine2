@@ -1,6 +1,7 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
 
+#include <memory>
 #include <vector>
 
 #include "SpriteMap.hpp"
@@ -15,7 +16,7 @@ class Animation {
   Animation(FacingDirection direction);
   void AddFrame(int textureID, int x, int y, int width, int height,
                 float frameTime);
-  void AddFrameList(std::vector<SpriteMapData> frameList);
+  void AddFrameList(std::shared_ptr<std::vector<SpriteMapData>> frameList);
   const SpriteMapData* GetCurrentFrame() const;
   bool UpdateFrame(float deltaTime);
   void Reset();
@@ -28,7 +29,7 @@ class Animation {
 
  private:
   void IncrementFrame();
-  std::vector<SpriteMapData> frames;
+  std::shared_ptr<std::vector<SpriteMapData>> frames;
   int currentFrame;
   float currentFrameTime;
   FacingDirection currentDirection;

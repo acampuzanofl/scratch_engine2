@@ -43,7 +43,7 @@ std::map<std::string, json> SpriteMap::GetFrames(
   return sorted;
 }
 
-std::vector<SpriteMapData> SpriteMap::CreateSpriteMapData(
+std::shared_ptr<std::vector<SpriteMapData>> SpriteMap::CreateSpriteMapData(
     int textureId, const std::string &animationName, float animationSpeed) {
   auto frames = GetFrames(animationName);
 
@@ -67,5 +67,6 @@ std::vector<SpriteMapData> SpriteMap::CreateSpriteMapData(
     frameData.displayTimeSeconds = animationSpeed;
     frameDataList.push_back(frameData);
   }
-  return frameDataList;
+
+  return std::make_shared<std::vector<SpriteMapData>>(frameDataList);
 }
