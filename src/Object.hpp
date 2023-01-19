@@ -51,9 +51,6 @@ class Object {
 
   template <typename T>
   std::shared_ptr<T> GetComponent() {
-    // make sure we only add components derived from the Component class
-    static_assert(std::is_base_of<Component, T>::value,
-                  "class must be derived from Component");
     // check if component already exists
     for (auto& existingComponent : components) {
       if (std::dynamic_pointer_cast<T>(existingComponent)) {

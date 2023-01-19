@@ -11,7 +11,7 @@
 // invuln, airborne, etc...
 // This will probably be a class of it's own, but it will probably have a
 // simialiar design and system to how CollisionLayers will work
-enum class CollisionLayer { None, Player, Throw, HitBox, HurtBox };
+enum class CollisionLayer { None, Player, Throw, Hit, Hurt };
 struct Manifold {
   bool colliding = false;
   const sf::FloatRect* intersects;
@@ -25,6 +25,7 @@ class CCollider : public Component {
   virtual void ResolveOverlap(const Manifold& m) = 0;
   CollisionLayer GetLayer() const;
   void SetLayer(CollisionLayer layer);
+  Object* GetOwner() const;
 
  private:
   CollisionLayer layer;
