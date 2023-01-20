@@ -12,6 +12,8 @@ class Window {
   void HandleEvents();
   void Clear();
   void Draw(const sf::Drawable& drawable);
+  void Draw(const sf::Vertex* vertices, std::size_t vertexCount,
+            sf::PrimitiveType type);
   void Update();
   bool IsOpen() const;
   sf::Vector2u GetCenter() const;

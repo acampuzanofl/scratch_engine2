@@ -21,6 +21,11 @@ void Window::Clear() { window.clear(sf::Color::White); }
 
 void Window::Draw(const sf::Drawable& drawable) { window.draw(drawable); }
 
+void Window::Draw(const sf::Vertex* vertices, std::size_t vertexCount,
+                  sf::PrimitiveType type) {
+  window.draw(vertices, vertexCount, type);
+}
+
 void Window::Update() { window.display(); }
 
 bool Window::IsOpen() const { return window.isOpen(); }
