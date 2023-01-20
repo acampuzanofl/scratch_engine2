@@ -1,5 +1,6 @@
 #include "SceneGame.hpp"
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -7,6 +8,7 @@
 
 #include "Animation.hpp"
 #include "CAnimation.hpp"
+#include "CBoxCollider.hpp"
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
 #include "Component.hpp"
@@ -107,6 +109,18 @@ void SceneGame::OnCreate() {
 
   // add the created animation to the animation component
   animation2->AddAnimation(AnimationState::Idle, mashidleAnimation);
+
+  // add collider component
+  auto collider = player->AddComponent<CBoxCollider>();
+  collider->SetCollidable(sf::FloatRect(
+      0, 0, animation->GetCurrentAnimation()->GetCurrentFrame()->framewidth,
+      animation->GetCurrentAnimation()->GetCurrentFrame()->frameheight));
+
+  // add collider component
+  auto collider2 = player2->AddComponent<CBoxCollider>();
+  collider2->SetCollidable(sf::FloatRect(
+      0, 0, animation2->GetCurrentAnimation()->GetCurrentFrame()->framewidth,
+      animation2->GetCurrentAnimation()->GetCurrentFrame()->frameheight));
 
   // add player object to the ObjectCollector
   objects.Add(player);

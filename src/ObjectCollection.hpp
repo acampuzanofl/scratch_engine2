@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Object.hpp"
+#include "SCollidable.hpp"
 #include "SDrawable.hpp"
 
 class ObjectCollection {
@@ -20,5 +21,6 @@ class ObjectCollection {
   std::vector<std::shared_ptr<Object>> objects;
   std::vector<std::shared_ptr<Object>> newObjects;
   SDrawable drawables;
+  SCollidable collidables;
 };
 #endif

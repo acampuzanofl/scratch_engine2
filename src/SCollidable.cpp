@@ -31,11 +31,14 @@ void SCollidable::Add(std::vector<std::shared_ptr<Object>>& objects) {
 }
 
 void SCollidable::ProcessRemovals() {
-  collidables.erase(std::remove_if(collidables.begin(), collidables.end(),
-                                   [](std::shared_ptr<Object>& o) {
-                                     return o->IsQueuedForRemoval();
-                                   }),
-                    collidables.end());
+  for (auto& layer : collidables) {
+    layer.second.erase(
+        std::remove_if(layer.second.begin(), layer.second.end(),
+                       [](std::shared_ptr<CBoxCollider>& o) {
+                         return o->GetOwner()->IsQueuedForRemoval();
+                       }),
+        layer.second.end());
+  }
 }
 
 void SCollidable::Update() {
