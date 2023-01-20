@@ -83,7 +83,9 @@ void CSprite::LateUpdate(float deltaTime) {
       currentAnimation->GetCurrentAnimation()->GetCurrentFrame();
   pos.x += currentFrame->sourceSizex;
   pos.y += currentFrame->sourceSizey;
-  // sprite.setOrigin(400, 320); // sourcewidth and sourcheigth
+  sprite.setOrigin(
+      currentFrame->sourcewidth / 2.f,
+      currentFrame->sourceheight / 2.f);  // sourcewidth and sourcheigth
   sprite.setPosition(pos);
 }
 
@@ -121,3 +123,5 @@ std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
       currentTextureId, animationName, animationSpeed));
   return animation;
 }
+
+sf::Sprite CSprite::GetSprite() const { return sprite; }

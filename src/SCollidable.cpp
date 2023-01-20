@@ -7,6 +7,7 @@
 #include "Bitmask.hpp"
 #include "CBoxCollider.hpp"
 #include "CCollider.hpp"
+#include "Debug.hpp"
 
 SCollidable::SCollidable() {}
 
@@ -71,11 +72,12 @@ void SCollidable::Resolve() {
       for (auto collision : collisions) {
         // perform a check to make sure we do not resolve collisions between the
         // same object
-        // TODO find a way to define unique ids for objects during collisions
-        //   if (collidable->owner->instanceID->Get() ==
-        //       collision->owner->instanceID->Get()) {
-        //     continue;
-        //   }
+        // TODO change names of instance ID, also make instance id private and
+        // create a getter. Also make transorm privatea and make a getter
+        if (collidable->GetOwner()->instanceId->GetInstanceId() ==
+            collision->GetOwner()->instanceId->GetInstanceId()) {
+          continue;
+        }
 
         // check if the layers can collide
         // with each other. This will always be true for now since
@@ -83,6 +85,11 @@ void SCollidable::Resolve() {
         // same layer anyways the intention is that each object will have its
         // own collision mask to determine what it's allowed to collide with.
         // Still determing whats the best way to implement that system
+
+        // debug
+        Debug::DrawRect(collision->GetCollidable());
+        Debug::DrawRect(collidable->GetCollidable());
+
         int layersCollide =
             ((int)collidable->GetLayer() & (int)collision->GetLayer());
         if (layersCollide) {

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "CDrawable.hpp"
+#include "CInstanceId.hpp"
 #include "CTransform.hpp"
 #include "Component.hpp"
 
@@ -60,6 +61,7 @@ class Object {
     return nullptr;
   }
   std::shared_ptr<CTransform> transform;
+  std::shared_ptr<CInstanceId> instanceId;
 
  private:
   std::vector<std::shared_ptr<Component>> components;

@@ -63,6 +63,8 @@ std::shared_ptr<std::vector<SpriteMapData>> SpriteMap::CreateSpriteMapData(
         std::stoi(it.second["spriteSourceSize"]["w"].dump());
     frameData.sourceSizeheight =
         std::stoi(it.second["spriteSourceSize"]["h"].dump());
+    frameData.sourcewidth = std::stoi(it.second["sourceSize"]["w"].dump());
+    frameData.sourceheight = std::stoi(it.second["sourceSize"]["h"].dump());
     frameData.isRotated = (it.second["rotated"].dump().compare("true") == 0);
     frameData.displayTimeSeconds = animationSpeed;
     frameDataList.push_back(frameData);

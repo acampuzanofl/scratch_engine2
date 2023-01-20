@@ -3,10 +3,12 @@
 #include <memory>
 
 #include "CDrawable.hpp"
+#include "CInstanceId.hpp"
 #include "CTransform.hpp"
 
 Object::Object() : queuedForRemoval(false) {
   transform = AddComponent<CTransform>();
+  instanceId = AddComponent<CInstanceId>();
 }
 
 void Object::QueueForRemoval() { queuedForRemoval = true; }

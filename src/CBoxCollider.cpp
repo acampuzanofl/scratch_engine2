@@ -79,3 +79,19 @@ void CBoxCollider::ResolveOverlap(const Manifold& m) {
     transform->AddPosition(0, resolve);
   }
 }
+
+void CBoxCollider::SetOffset(const sf::Vector2f& offset) {
+  this->offset = offset;
+}
+void CBoxCollider::SetOffset(float x, float y) {
+  offset.x = x;
+  offset.y = y;
+}
+void CBoxCollider::SetSize(const sf::Vector2f& size) {
+  AABB.width = size.x;
+  AABB.height = size.y;
+}
+void CBoxCollider::SetSize(float width, float height) {
+  AABB.width = width;
+  AABB.height = height;
+}

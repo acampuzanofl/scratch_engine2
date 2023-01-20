@@ -5,10 +5,12 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <memory>
+#include <string>
 
 #include "Animation.hpp"
 #include "CAnimation.hpp"
 #include "CBoxCollider.hpp"
+#include "CCollider.hpp"
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
 #include "Component.hpp"
@@ -28,11 +30,11 @@ SceneGame::SceneGame(WorkingDirectory &workingDir,
 void SceneGame::OnCreate() {
   // create a temporary player object
   std::shared_ptr<Object> player = std::make_shared<Object>();
-  player->transform->SetPosition(200.f, 0.f);  // set a starting position
+  player->transform->SetPosition(500.f, 300.f);  // set a starting position
 
   // player2
   std::shared_ptr<Object> player2 = std::make_shared<Object>();
-  player2->transform->SetPosition(-200.f, -150.f);  // set a starting position
+  player2->transform->SetPosition(200.f, 300.f);  // set a starting position
 
   // Add a sprite component to the player
   auto sprite = player->AddComponent<CSprite>();
@@ -113,15 +115,17 @@ void SceneGame::OnCreate() {
 
   // add collider component
   auto collider = player->AddComponent<CBoxCollider>();
-  collider->SetCollidable(sf::FloatRect(
-      0, 0, animation->GetCurrentAnimation()->GetCurrentFrame()->framewidth,
-      animation->GetCurrentAnimation()->GetCurrentFrame()->frameheight));
+  //   collider->SetCollidable(sprite->GetSprite().getLocalBounds());
+  auto localBounds = sprite->GetSprite().getLocalBounds();
+  collider->SetSize(localBounds.width * .01f, localBounds.height * .01f);
+  collider->SetLayer(CollisionLayer::Player);
 
   // add collider component
   auto collider2 = player2->AddComponent<CBoxCollider>();
-  collider2->SetCollidable(sf::FloatRect(
-      0, 0, animation2->GetCurrentAnimation()->GetCurrentFrame()->framewidth,
-      animation2->GetCurrentAnimation()->GetCurrentFrame()->frameheight));
+  //   collider2->SetCollidable(sprite2->GetSprite().getLocalBounds());
+  auto localBounds2 = sprite2->GetSprite().getLocalBounds();
+  collider2->SetSize(localBounds2.width * .01f, localBounds2.height * .01f);
+  collider2->SetLayer(CollisionLayer::Player);
 
   // add player object to the ObjectCollector
   objects.Add(player);

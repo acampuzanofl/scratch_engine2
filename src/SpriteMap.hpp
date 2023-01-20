@@ -17,6 +17,8 @@ struct SpriteMapData {
   int sourceSizey;
   int sourceSizewidth;
   int sourceSizeheight;
+  int sourceheight;
+  int sourcewidth;
   bool isRotated;
   float displayTimeSeconds;  // time from is displayed for
 };
