@@ -12,6 +12,7 @@
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
 #include "Component.hpp"
+#include "Debug.hpp"
 #include "Input.hpp"
 #include "ResourceAllocator.hpp"
 #include "SpriteMap.hpp"
@@ -145,4 +146,7 @@ void SceneGame::Update(float deltaTime) {
   objects.ProcessNewObjects();
   objects.Update(deltaTime);
 }
-void SceneGame::Draw(Window &window) { objects.Draw(window); }
+void SceneGame::Draw(Window &window) {
+  objects.Draw(window);
+  Debug::Draw(window);
+}
