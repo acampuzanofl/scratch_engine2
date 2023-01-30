@@ -16,5 +16,6 @@ aux_source_directory(src/ SRC)
 add_executable(scratch_engine2 ${SRC})
 
 target_link_libraries(scratch_engine2 sfml-graphics sfml-window sfml-system)
+target_compile_options(scratch_engine2 PRIVATE -Wall -Wextra)
 
 install(TARGETS scratch_engine2 DESTINATION ${CMAKE_SOURCE_DIR}/engine)

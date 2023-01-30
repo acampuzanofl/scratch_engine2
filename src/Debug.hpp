@@ -19,6 +19,9 @@ class Debug {
   static void DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
                        sf::Color color = sf::Color::Red);
   static void Log(const std::string& msg);
+
+  // This template allows for variadic arguments.
+  // we use this template to allow us to make a wrapper for printf
   template <typename... Args>
   static void Log(const std::string& msg, Args... args) {
     std::printf(msg.c_str(), args...);
