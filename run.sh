@@ -1,6 +1,6 @@
 #!/bin/sh
 pushd build/ > /dev/null
 cmake ..
-make .
+make 
 ./scratch_engine2
 popd > /dev/null

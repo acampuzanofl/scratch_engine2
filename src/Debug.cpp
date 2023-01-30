@@ -5,7 +5,11 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <array>
+#include <cstdio>
+#include <cstring>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 std::vector<sf::RectangleShape> Debug::rects = {};
@@ -41,9 +45,3 @@ void Debug::DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
 }
 
 void Debug::Log(const std::string& msg) { std::cout << msg << std::endl; }
-void Debug::LogWarning(const std::string& msg) {
-  std::cout << "\033[93mWARNING:\033[0m " << msg << std::endl;
-}
-void Debug::LogError(const std::string& msg) {
-  std::cout << "\033[91mERROR:\033[0m " << msg << std::endl;
-}

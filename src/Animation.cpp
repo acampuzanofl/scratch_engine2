@@ -45,7 +45,7 @@ const SpriteMapData* Animation::GetCurrentFrame() const {
   return &(*frames)[currentFrame];
 }
 
-bool Animation::UpdateFrame(float deltaTime) {
+bool Animation::Update(float deltaTime) {
   assert(frames != nullptr);
   assert(frames->size() > 0);
 

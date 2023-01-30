@@ -18,7 +18,7 @@ class Animation {
                 float frameTime);
   void AddFrameList(std::shared_ptr<std::vector<SpriteMapData>> frameList);
   const SpriteMapData* GetCurrentFrame() const;
-  bool UpdateFrame(float deltaTime);
+  bool Update(float deltaTime);
   void Reset();
   void SetDirection(FacingDirection dir);
   FacingDirection GetCurrentDirection() const;
