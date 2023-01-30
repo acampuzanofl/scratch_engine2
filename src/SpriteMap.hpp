@@ -26,6 +26,8 @@ struct SpriteMapData {
 class SpriteMap {
  public:
   SpriteMap();
+  // json file generated using free texture packer
+  // https://github.com/odrick/free-tex-packer
   bool loadFromFile(const std::string &fileName);
   std::shared_ptr<std::vector<SpriteMapData>> CreateSpriteMapData(
       int textureId, const std::string &animationName, float animationSpeed);
