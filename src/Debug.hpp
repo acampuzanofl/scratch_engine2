@@ -19,6 +19,10 @@ class Debug {
   static void DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
                        sf::Color color = sf::Color::Red);
   static void Log(const std::string& msg);
+  template <typename... Args>
+  static void Log(const std::string& msg, Args... args) {
+    std::printf(msg.c_str(), args...);
+  }
 
  private:
   static std::vector<std::array<sf::Vertex, 2>> lines;
