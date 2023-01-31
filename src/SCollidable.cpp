@@ -1,5 +1,6 @@
 #include "SCollidable.hpp"
 
+#include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -79,14 +80,14 @@ void SCollidable::Resolve() {
           continue;
         }
 
-        // check if the layers can collide
+        // check if the layers can collide.
         // with each other. This will always be true for now since
         // we are only checking for collisions for objects that are within the
-        // same layer anyways the intention is that each object will have its
+        // same layer anyways. the intention is that each object will have its
         // own collision mask to determine what it's allowed to collide with.
         // Still determing whats the best way to implement that system
 
-        // debug
+        // draw collision boxes
         // Debug::DrawRect(collision->GetCollidable());
         // Debug::DrawRect(collidable->GetCollidable());
 

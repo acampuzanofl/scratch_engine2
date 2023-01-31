@@ -39,6 +39,19 @@ void Debug::DrawRect(const sf::FloatRect& rect, sf::Color color) {
   rects.push_back(shape);
 }
 
+// this method allows you to print rects centered around an origin
+void Debug::DrawRect(const sf::FloatRect& rect, const sf::Vector2f origin,
+                     sf::Color color) {
+  sf::Vector2f size(rect.width, rect.height);
+  sf::Vector2f pos(rect.left - origin.x, rect.top - origin.y);
+  sf::RectangleShape shape(size);
+  shape.setPosition(pos);
+  shape.setOutlineColor(color);
+  shape.setOutlineThickness(3.f);
+  shape.setFillColor(sf::Color::Transparent);
+  rects.push_back(shape);
+}
+
 void Debug::DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
                      sf::Color colour) {
   lines.push_back({sf::Vertex(from, colour), sf::Vertex(to, colour)});

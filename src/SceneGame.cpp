@@ -115,16 +115,12 @@ void SceneGame::OnCreate() {
 
   // add collider component
   auto collider = player->AddComponent<CBoxCollider>();
-  //   collider->SetCollidable(sprite->GetSprite().getLocalBounds());
-  auto localBounds = sprite->GetSprite().getLocalBounds();
-  collider->SetSize(localBounds.width * .01f, localBounds.height * .01f);
+  collider->SetSize(100, 200);
   collider->SetLayer(CollisionLayer::Player);
 
   // add collider component
   auto collider2 = player2->AddComponent<CBoxCollider>();
-  //   collider2->SetCollidable(sprite2->GetSprite().getLocalBounds());
-  auto localBounds2 = sprite2->GetSprite().getLocalBounds();
-  collider2->SetSize(localBounds2.width * .01f, localBounds2.height * .01f);
+  collider2->SetSize(100, 200);
   collider2->SetLayer(CollisionLayer::Player);
 
   // add player object to the ObjectCollector

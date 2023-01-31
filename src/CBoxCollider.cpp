@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "CCollider.hpp"
+#include "Debug.hpp"
 #include "Object.hpp"
 
 CBoxCollider::CBoxCollider(Object* owner)

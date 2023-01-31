@@ -88,16 +88,15 @@ void CSprite::LateUpdate(float /*deltaTime*/) {
   pos.x += currentFrame->sourceSizex;
   pos.y += currentFrame->sourceSizey;
 
-  sprite.setOrigin(
-      currentFrame->sourcewidth / 2.f,
-      currentFrame->sourceheight / 2.f);  // sourcewidth and sourcheigth
-  // debug sprite bounding boxes
-  sf::FloatRect boundingRect = sprite.getLocalBounds();
-  boundingRect.top = pos.y;
-  boundingRect.left = pos.x;
-  Debug::DrawRect(boundingRect);
+  sf::Vector2f origin(currentFrame->sourcewidth / 2.f,
+                      currentFrame->sourceheight / 2.f);
 
+  sprite.setOrigin(origin);
   sprite.setPosition(pos);
+
+  // debug sprite bounding boxes
+  // sf::FloatRect boundingRect = sprite.getGlobalBounds();
+  // Debug::DrawRect(boundingRect);
 }
 
 void CSprite::Draw(Window &window) { window.Draw(sprite); }
