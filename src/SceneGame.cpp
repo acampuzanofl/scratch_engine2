@@ -133,9 +133,11 @@ void SceneGame::OnCreate() {
 void SceneGame::OnActivate() {}
 void SceneGame::OnDestroy() {}
 void SceneGame::ProcessInput() {
-  // TODO make an object collector for things with inputs and keyboard
-  // components. So that we only need to call objects.PollKey and process the
-  // inputs only if theres objects that are looking for inputs
+  /**
+   *  TODO make an object collector for things with inputs and keyboard
+   *  components. So that we only need to call objects.PollKey and process the
+   *  inputs only if theres objects that are looking for inputs
+   */
 
   input.PollKey();
   input2.PollKey();

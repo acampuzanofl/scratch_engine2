@@ -22,6 +22,12 @@ const sf::FloatRect& CBoxCollider::GetCollidable() {
   return AABB;
 }
 
+/**
+ * Set position gets called everytime a check for intersects occurs. it also
+ * gets called during resolve overlap. this means that the collider will get its
+ * position updated during collision checking.
+ */
+
 void CBoxCollider::SetPosition() {
   const sf::Vector2f& pos = owner->transform->GetPosition();
   AABB.left = pos.x - (AABB.width / 2) + offset.x;
