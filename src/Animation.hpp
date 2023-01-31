@@ -24,8 +24,8 @@ class Animation {
   FacingDirection GetCurrentDirection() const;
 
   // Debugging functions
-  const int GetCurrentFrameIndex() const;
-  const int GetAnimationSize() const;
+  int GetCurrentFrameIndex() const;
+  int GetAnimationSize() const;
 
  private:
   void IncrementFrame();

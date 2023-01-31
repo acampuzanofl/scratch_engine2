@@ -87,8 +87,8 @@ void SCollidable::Resolve() {
         // Still determing whats the best way to implement that system
 
         // debug
-        Debug::DrawRect(collision->GetCollidable());
-        Debug::DrawRect(collidable->GetCollidable());
+        // Debug::DrawRect(collision->GetCollidable());
+        // Debug::DrawRect(collidable->GetCollidable());
 
         int layersCollide =
             ((int)collidable->GetLayer() & (int)collision->GetLayer());

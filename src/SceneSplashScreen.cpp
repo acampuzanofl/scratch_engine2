@@ -1,9 +1,10 @@
+#include "SceneSplashScreen.hpp"
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 
-#include "SceneSplashScreen.hpp"
 #include "SceneStateMachine.hpp"
 #include "WorkingDirectory.hpp"
 
@@ -11,13 +12,13 @@ SceneSplashScreen::SceneSplashScreen(WorkingDirectory& workingDirectory,
                                      SceneStateMachine& sceneStateMachine,
                                      Window& window,
                                      ResourceAllocator<sf::Texture>& allocator)
-    : sceneStateMachine(sceneStateMachine),
-      workingDirectory(workingDirectory),
+    : workingDirectory(workingDirectory),
+      sceneStateMachine(sceneStateMachine),
       window(window),
-      allocator(allocator),
-      switchToState(0),
+      showForSeconds(0.f),
       currentSeconds(0.f),
-      showForSeconds(0.f){};
+      switchToState(0),
+      allocator(allocator){};
 
 void SceneSplashScreen::OnCreate() {
   // add the texture to the allocator

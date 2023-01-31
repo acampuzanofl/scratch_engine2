@@ -10,8 +10,8 @@ class Component {
   Component(Object* owner) : owner(owner) {}
   virtual void Awake(){};
   virtual void Start(){};
-  virtual void Update(float deltaTime){};
-  virtual void LateUpdate(float deltaTime){};
+  virtual void Update(float /*deltaTime*/){};
+  virtual void LateUpdate(float /*deltaTime*/){};
 
  protected:
   Object* owner;

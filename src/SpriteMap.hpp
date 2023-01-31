@@ -8,19 +8,19 @@
 using json = nlohmann::json;
 
 struct SpriteMapData {
-  int id;           // id supplied from allocator
-  int framex;       // x position in sprite sheet
-  int framey;       // y position in sprite sheet
-  int framewidth;   // width position in sprite sheet
-  int frameheight;  // height position in sprite sheet
-  int sourceSizex;
-  int sourceSizey;
-  int sourceSizewidth;
-  int sourceSizeheight;
-  int sourceheight;
-  int sourcewidth;
-  bool isRotated;
-  float displayTimeSeconds;  // time from is displayed for
+  int id = 0;           // id supplied from allocator
+  int framex = 0;       // x position in sprite sheet
+  int framey = 0;       // y position in sprite sheet
+  int framewidth = 0;   // width position in sprite sheet
+  int frameheight = 0;  // height position in sprite sheet
+  int sourceSizex = 0;
+  int sourceSizey = 0;
+  int sourceSizewidth = 0;
+  int sourceSizeheight = 0;
+  int sourceheight = 0;
+  int sourcewidth = 0;
+  bool isRotated = 0;
+  float displayTimeSeconds = 0;  // time from is displayed for
 };
 
 class SpriteMap {

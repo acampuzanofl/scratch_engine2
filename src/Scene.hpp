@@ -14,8 +14,8 @@ class Scene {
   // when transition away from current scene
   virtual void OnDeactivate(){};
   virtual void ProcessInput(){};
-  virtual void Update(float deltaTime){};
-  virtual void LateUpdate(float deltaTime){};
-  virtual void Draw(Window &window){};
+  virtual void Update(float /*deltaTime*/){};
+  virtual void LateUpdate(float /*deltaTime*/){};
+  virtual void Draw(Window & /*window*/){};
 };
 #endif

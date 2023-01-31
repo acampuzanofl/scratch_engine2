@@ -34,7 +34,7 @@ void CAnimation::Update(float deltaTime) {
 
 void CAnimation::AddAnimation(AnimationState state,
                               std::shared_ptr<Animation> animation) {
-  auto inserted = animations.insert(std::make_pair(state, animation));
+  animations.insert(std::make_pair(state, animation));
   if (currentAnimation.first == AnimationState::None) {
     SetAnimationState(state);
   }

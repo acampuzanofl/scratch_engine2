@@ -23,18 +23,18 @@
 SceneGame::SceneGame(WorkingDirectory &workingDir,
                      ResourceAllocator<sf::Texture> &textureAllocator,
                      ResourceAllocator<SpriteMap> &spriteMapAllocator)
-    : assetsDir(workingDir),
-      textureAllocator(textureAllocator),
-      spriteMapAllocator(spriteMapAllocator) {}
+    : textureAllocator(textureAllocator),
+      spriteMapAllocator(spriteMapAllocator),
+      assetsDir(workingDir) {}
 
 void SceneGame::OnCreate() {
   // create a temporary player object
   std::shared_ptr<Object> player = std::make_shared<Object>();
-  player->transform->SetPosition(500.f, 300.f);  // set a starting position
+  player->transform->SetPosition(630.f, 380.f);  // set a starting position
 
   // player2
   std::shared_ptr<Object> player2 = std::make_shared<Object>();
-  player2->transform->SetPosition(200.f, 300.f);  // set a starting position
+  player2->transform->SetPosition(230.f, 300.f);  // set a starting position
 
   // Add a sprite component to the player
   auto sprite = player->AddComponent<CSprite>();

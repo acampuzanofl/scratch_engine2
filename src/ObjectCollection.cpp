@@ -20,11 +20,7 @@ void ObjectCollection::LateUpdate(float deltaTIme) {
   }
 }
 
-void ObjectCollection::Draw(Window& window) {
-  for (auto& o : objects) {
-    drawables.Draw(window);
-  }
-}
+void ObjectCollection::Draw(Window& window) { drawables.Draw(window); }
 
 void ObjectCollection::Add(std::shared_ptr<Object> object) {
   newObjects.push_back(object);

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "SpriteMap.hpp"
+
 Animation::Animation(FacingDirection direction)
     : currentFrame(0), currentFrameTime(0.f), currentDirection(direction) {}
 
@@ -23,7 +25,7 @@ FacingDirection Animation::GetCurrentDirection() const {
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height,
                          float frameTIme) {
-  SpriteMapData data = {0};
+  SpriteMapData data = {};
   data.id = textureID;
   data.framex = x;
   data.framey = y;
@@ -68,5 +70,5 @@ void Animation::Reset() {
 }
 
 // debugging functions
-const int Animation::GetCurrentFrameIndex() const { return currentFrame; }
-const int Animation::GetAnimationSize() const { return frames->size(); }
+int Animation::GetCurrentFrameIndex() const { return currentFrame; }
+int Animation::GetAnimationSize() const { return frames->size(); }
