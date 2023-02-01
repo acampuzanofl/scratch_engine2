@@ -1,5 +1,6 @@
 #include "CSprite.hpp"
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
@@ -95,8 +96,8 @@ void CSprite::LateUpdate(float /*deltaTime*/) {
   sprite.setPosition(pos);
 
   // debug sprite bounding boxes
-  // sf::FloatRect boundingRect = sprite.getGlobalBounds();
-  // Debug::DrawRect(boundingRect);
+  sf::FloatRect boundingRect = sprite.getGlobalBounds();
+  Debug::DrawRect(boundingRect, sf::Color::Green);
 }
 
 void CSprite::Draw(Window &window) { window.Draw(sprite); }

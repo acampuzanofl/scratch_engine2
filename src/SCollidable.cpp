@@ -97,8 +97,8 @@ void SCollidable::Resolve() {
          */
 
         // draw collision boxes
-        // Debug::DrawRect(collision->GetCollidable());
-        // Debug::DrawRect(collidable->GetCollidable());
+        Debug::DrawRect(collision->GetCollidable());
+        Debug::DrawRect(collidable->GetCollidable());
 
         int layersCollide =
             ((int)collidable->GetLayer() & (int)collision->GetLayer());

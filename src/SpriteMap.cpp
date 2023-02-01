@@ -13,8 +13,10 @@
 
 SpriteMap::SpriteMap() {}
 
-// json file generated using free texture packer
-// https://github.com/odrick/free-tex-packer
+/**
+ * json file generated using free texture packer
+ * https://github.com/odrick/free-tex-packer
+ */
 bool SpriteMap::loadFromFile(const std::string &fileName) {
   std::fstream f(fileName);
   jsonData = json::parse(f);
@@ -44,8 +46,10 @@ std::map<std::string, json> SpriteMap::GetFrames(
   }
   return sorted;
 }
-// json file generated using free texture packer
-// https://github.com/odrick/free-tex-packer
+/**
+ * json file generated using free texture packer
+ * https://github.com/odrick/free-tex-packer
+ */
 std::shared_ptr<std::vector<SpriteMapData>> SpriteMap::CreateSpriteMapData(
     int textureId, const std::string &animationName, float animationSpeed) {
   auto frames = GetFrames(animationName);
