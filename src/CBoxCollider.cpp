@@ -52,9 +52,7 @@ Manifold CBoxCollider::Intersects(std::shared_ptr<CCollider> intersects) {
 
 void CBoxCollider::ResolveOverlap(const Manifold& m) {
   auto transform = owner->transform;
-  if (transform->isStatic()) {
-    return;
-  }
+
   const sf::FloatRect& rect1 = GetCollidable();
   const sf::FloatRect* rect2 = m.intersects;
   float resolve = 0;

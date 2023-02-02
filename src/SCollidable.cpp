@@ -66,9 +66,12 @@ void SCollidable::Resolve() {
       continue;
     }
 
-    for (auto collidable : maps.second) {
+    /**
+     * loop through all the collidables in a layer
+     */
+    for (auto collidable : maps.second /*collidables*/) {
       /**
-       *  we will temporarily loop throuhg all objects on the same layer and
+       *  we will temporarily loop through all objects on the same layer and
        *  check if we are colliding with any of them
        */
       std::vector<std::shared_ptr<CBoxCollider>> collisions = maps.second;
