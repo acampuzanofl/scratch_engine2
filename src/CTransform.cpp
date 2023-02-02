@@ -22,3 +22,6 @@ void CTransform::SetY(float y) { position.y = y; }
 void CTransform::AddX(float x) { position.x += x; }
 void CTransform::AddY(float y) { position.y += y; }
 const sf::Vector2f& CTransform::GetPosition() const { return position; }
+
+void CTransform::SetIsMoving(bool isMoving) { this->isMoving = isMoving; }
+bool CTransform::IsMoving() { return isMoving; }

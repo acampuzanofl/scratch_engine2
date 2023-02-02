@@ -67,9 +67,17 @@ void SCollidable::Resolve() {
     }
 
     /**
+     * check if layers can collide with each other. This will always be true
+     * for now since we are only checking for collisions with objects that are
+     * within the same layer. the intention is that each object will have a
+     * collision mask to determine what it's allowed to collide with. still
+     * determing whats the best way to implement that system
+     */
+
+    /**
      * loop through all the collidables in a layer
      */
-    for (auto collidable : maps.second /*collidables*/) {
+    for (auto collidable : /*collidables*/ maps.second) {
       /**
        *  we will temporarily loop through all objects on the same layer and
        *  check if we are colliding with any of them
@@ -87,33 +95,43 @@ void SCollidable::Resolve() {
             collision->GetOwner()->instanceId->GetInstanceId()) {
           continue;
         }
-        /**
-         *  check if the layers can collide.
-         *  with each other. This will always be true for now since
-         *  we are only checking for collisions for objects that are within the
-         *  same layer anyways. the intention is that each object will have its
-         *  own collision mask to determine what it's allowed to collide with.
-         *  Still determing whats the best way to implement that system
-         */
 
         // draw collision boxes
         Debug::DrawRect(collision->GetCollidable());
         Debug::DrawRect(collidable->GetCollidable());
 
+        /**
+         * We check if the layers are allowed to collide, This should be
+         * immplemented as a bit mask. But for now they are just enums
+         */
         int layersCollide =
             ((int)collidable->GetLayer() & (int)collision->GetLayer());
         if (layersCollide) {
           Manifold m = collidable->Intersects(collision);
           if (m.colliding) {
             /**
-             *  TODO i just copied this implementatoin
-             *  im not sure i will have "Static" objects
-             *  different types of collisions need to be resolved based on
-             *  what type of layer is colliding. Maybe a switch case? or
-             *  callbacks? to enable handling collisions from different layers
+             * We check if the collision is moving, and if it is we resolve the
+             * collision on the collidable. This is a bad way to implement this,
+             * but it does simulate the behavior i want. The behavior i want is
+             * for the collision to resolve differently depending on which
+             * object is moving. The problem is that this doesnt handle the case
+             * for when both objects are moving correctly. they behavior that i
+             * expect is both objects should cause a collision to occur which
+             * triggers each others resolveoverlap. What actually occurs is that
+             * only one resolveoverlap occurs, and its the one that was added to
+             * the collidables list last whos overlap gets resolved. TODO: find
+             * a way to resolve collisions between to objects simulaneuosly.
              */
-
-            collidable->ResolveOverlap(m);
+            if (collision->GetOwner()->transform->IsMoving()) {
+              collidable->ResolveOverlap(m);
+            } else {
+              /**
+               * TODO: im not sure if
+               * different types of collisions need to be resolved based on
+               * what type of layer is colliding. Maybe a switch case? or
+               * callbacks? to enable handling collisions from different layers
+               */
+            }
           }
         }
       }

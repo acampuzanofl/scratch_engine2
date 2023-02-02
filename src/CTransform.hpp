@@ -16,9 +16,12 @@ class CTransform : public Component {
   void AddX(float x);
   void AddY(float y);
   const sf::Vector2f& GetPosition() const;
+  void SetIsMoving(bool isMoving);
+  bool IsMoving();
 
  private:
   sf::Vector2f position;
+  bool isMoving;
 };
 
 #endif
