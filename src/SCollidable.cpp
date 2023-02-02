@@ -45,7 +45,7 @@ void SCollidable::ProcessRemovals() {
 
 void SCollidable::Update() {
   /**
-   *  here is where i would add collidables into my collision data struct
+   *  here is where i would add/update collidables into my collision data struct
    *  currently i do not have one, so im leaving it blank
    *  TODO create a data struct to handle optimizing collision detection
    *  apperently adding collidables to the data struct in this step is a
@@ -67,9 +67,6 @@ void SCollidable::Resolve() {
     }
 
     for (auto collidable : maps.second) {
-      if (collidable->GetOwner()->transform->isStatic()) {
-        continue;
-      }
       /**
        *  we will temporarily loop throuhg all objects on the same layer and
        *  check if we are colliding with any of them
@@ -105,19 +102,15 @@ void SCollidable::Resolve() {
         if (layersCollide) {
           Manifold m = collidable->Intersects(collision);
           if (m.colliding) {
-            if (collision->GetOwner()->transform->isStatic()) {
-              collidable->ResolveOverlap(m);
-            } else {
-              /**
-               *  TODO i just copied this implementatoin
-               *  im not sure i will have "Static" objects
-               *  different types of collisions need to be resolved based on
-               *  what type of layer is colliding. Maybe a switch case? or
-               *  callbacks? to enable handling collisions from different layers
-               */
+            /**
+             *  TODO i just copied this implementatoin
+             *  im not sure i will have "Static" objects
+             *  different types of collisions need to be resolved based on
+             *  what type of layer is colliding. Maybe a switch case? or
+             *  callbacks? to enable handling collisions from different layers
+             */
 
-              collidable->ResolveOverlap(m);
-            }
+            collidable->ResolveOverlap(m);
           }
         }
       }

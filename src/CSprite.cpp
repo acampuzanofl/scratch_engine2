@@ -96,8 +96,8 @@ void CSprite::LateUpdate(float /*deltaTime*/) {
   sprite.setPosition(pos);
 
   // debug sprite bounding boxes
-  sf::FloatRect boundingRect = sprite.getGlobalBounds();
-  Debug::DrawRect(boundingRect, sf::Color::Green);
+  // sf::FloatRect boundingRect = sprite.getGlobalBounds();
+  // Debug::DrawRect(boundingRect, sf::Color::Green);
 }
 
 void CSprite::Draw(Window &window) { window.Draw(sprite); }
