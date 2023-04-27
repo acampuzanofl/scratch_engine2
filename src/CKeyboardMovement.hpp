@@ -12,11 +12,9 @@ class CKeyboardMovement : public Component {
   CKeyboardMovement(Object* owner);
   void Awake() override;
   void SetInput(Input* input);
-  void SetMovementSpeed(int moveSpeed);
   void Update(float deltaTime) override;
 
  private:
-  int moveSpeed;
   Input* input;
   // TODO: ckeyboard should not know anything about animation, we are doing this
   // as a temp solution for controlling animation direction ultimate goal is to

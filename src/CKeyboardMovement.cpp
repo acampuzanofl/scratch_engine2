@@ -1,5 +1,6 @@
 #include "CKeyboardMovement.hpp"
 
+#include <SFML/System/Vector2.hpp>
 #include <cassert>
 
 #include "Animation.hpp"
@@ -7,45 +8,35 @@
 #include "Component.hpp"
 #include "Object.hpp"
 
-CKeyboardMovement::CKeyboardMovement(Object* owner)
-    : Component(owner), moveSpeed(200) {}
-
+CKeyboardMovement::CKeyboardMovement(Object* owner) : Component(owner) {}
 void CKeyboardMovement::Awake() {
   animation = owner->GetComponent<CAnimation>();
 }
 void CKeyboardMovement::SetInput(Input* input) { this->input = input; }
-
-void CKeyboardMovement::SetMovementSpeed(int moveSpeed) {
-  this->moveSpeed = moveSpeed;
-}
-
 void CKeyboardMovement::Update(float deltaTime) {
   assert(input != nullptr);
 
   // Update movement
-  int xMove = 0;
   if (input->IsKeyPressed(Input::Key::Left)) {
-    xMove = -moveSpeed;
+    /**
+     * movement speed should be a property of the transform object
+     * we are hardcoding it for now do to ease of use
+     * TODO: need to change the im
+     */
+
+    owner->transform->SetVelocity(sf::Vector2f(-200, 0));
   } else if (input->IsKeyPressed(Input::Key::Right)) {
-    xMove = moveSpeed;
+    owner->transform->SetVelocity(sf::Vector2f(200, 0));
   }
-  float xFrameMove = xMove * deltaTime;
-  owner->transform->AddX(xFrameMove);
 
   /**
    * TODO: We are implementing this temproarly in the keyboard compononent
-   * for testing GOAL: implement an animation state machine independent from
+   * for testing implement an animation state machine independent from
    * keyboard component
    */
-  if (xMove == 0) {
+  if (owner->transform->GetVelocity().x == 0) {
     animation->SetAnimationState(AnimationState::Idle);
-    /**
-     * We are setting a flag to allow the collision system to know how to handle
-     * collisions based on player movement.
-     */
-    owner->transform->SetIsMoving(false);
   } else {
     animation->SetAnimationState(AnimationState::Walk);
-    owner->transform->SetIsMoving(true);
   }
 }

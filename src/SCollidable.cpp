@@ -47,17 +47,17 @@ void SCollidable::Update() {
   /**
    *  here is where i would add/update collidables into my collision data struct
    *  currently i do not have one, so im leaving it blank
-   *  TODO create a data struct to handle optimizing collision detection
+   *  TODO: create a data struct to handle optimizing collision detection
    *  apperently adding collidables to the data struct in this step is a
    *  performance loss dynamically updating the data struct is the best
-   *  implementation. TODO implement the easier one of the too, dynamic or add
+   *  implementation. TODO: implement the easier one of the too, dynamic or add
    *  it here
    */
   Resolve();
 }
 
 void SCollidable::Resolve() {
-  for (auto maps : collidables) {
+  for (const auto& maps : collidables) {
     /**
      *  check what the layer collides with
      *  if the layer collides with nothing then exit
@@ -77,13 +77,13 @@ void SCollidable::Resolve() {
     /**
      * loop through all the collidables in a layer
      */
-    for (auto collidable : /*collidables*/ maps.second) {
+    for (const auto& collidable : /*collidables*/ maps.second) {
       /**
        *  we will temporarily loop through all objects on the same layer and
        *  check if we are colliding with any of them
        */
       std::vector<std::shared_ptr<CBoxCollider>> collisions = maps.second;
-      for (auto collision : collisions) {
+      for (const auto& collision : collisions) {
         /**
          *  perform a check to make sure we do not resolve collisions between
          *  the same object
@@ -102,7 +102,7 @@ void SCollidable::Resolve() {
 
         /**
          * We check if the layers are allowed to collide, This should be
-         * immplemented as a bit mask. But for now they are just enums
+         * implemented as a bit mask. But for now they are just enums
          */
         int layersCollide =
             ((int)collidable->GetLayer() & (int)collision->GetLayer());
@@ -122,7 +122,7 @@ void SCollidable::Resolve() {
              * the collidables list last whos overlap gets resolved. TODO: find
              * a way to resolve collisions between to objects simulaneuosly.
              */
-            if (collision->GetOwner()->transform->IsMoving()) {
+            if (collision->GetOwner()->transform->GetVelocity().x != 0) {
               collidable->ResolveOverlap(m);
             } else {
               /**
