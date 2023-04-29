@@ -6,7 +6,7 @@
 #include "Debug.hpp"
 
 CTransform::CTransform(Object* owner)
-    : Component(owner), position(0.f, 0.f), weight(10) {}
+    : Component(owner), position(0.f, 0.f), weight(50) {}
 void CTransform::SetPosition(float x, float y) {
   position.x = x;
   position.y = y;

@@ -19,12 +19,6 @@ void CKeyboardMovement::Update(float deltaTime) {
 
   // Update movement
   if (input->IsKeyPressed(Input::Key::Left)) {
-    /**
-     * movement speed should be a property of the transform object
-     * we are hardcoding it for now do to ease of use
-     * TODO: need to change the im
-     */
-
     owner->transform->SetVelocity(sf::Vector2f(-200, 0));
     animation->SetAnimationState(AnimationState::Walk);
 
