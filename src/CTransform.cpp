@@ -34,6 +34,5 @@ void CTransform::SetWeight(float weight) { this->weight = weight; }
 void CTransform::Update(float dt) {
   position += velocity * dt;
   velocity *= 1.f - weight * dt;
-  Debug::Log("velocity: %f %f", velocity.x, velocity.y);
 }
 void CTransform::SetMoveSpeed(int moveSpeed) { this->moveSpeed = moveSpeed; }

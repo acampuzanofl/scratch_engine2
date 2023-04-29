@@ -6,6 +6,7 @@
 #include "Animation.hpp"
 #include "CAnimation.hpp"
 #include "Component.hpp"
+#include "Debug.hpp"
 #include "Object.hpp"
 
 CKeyboardMovement::CKeyboardMovement(Object* owner) : Component(owner) {}
@@ -25,18 +26,17 @@ void CKeyboardMovement::Update(float deltaTime) {
      */
 
     owner->transform->SetVelocity(sf::Vector2f(-200, 0));
+    animation->SetAnimationState(AnimationState::Walk);
+
   } else if (input->IsKeyPressed(Input::Key::Right)) {
     owner->transform->SetVelocity(sf::Vector2f(200, 0));
-  }
-
-  /**
-   * TODO: We are implementing this temproarly in the keyboard compononent
-   * for testing implement an animation state machine independent from
-   * keyboard component
-   */
-  if (owner->transform->GetVelocity().x == 0) {
-    animation->SetAnimationState(AnimationState::Idle);
-  } else {
     animation->SetAnimationState(AnimationState::Walk);
+  } else {
+    /**
+     * TODO: We are implementing this temproarly in the keyboard compononent
+     * for testing implement an animation state machine independent from
+     * keyboard component
+     */
+    animation->SetAnimationState(AnimationState::Idle);
   }
 }
