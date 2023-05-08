@@ -30,7 +30,7 @@ add_executable(scratch_engine2 ${SRC})
 target_link_libraries(scratch_engine2 sfml-graphics sfml-window sfml-system)
 
 # Add compiler options to the 'scratch_engine2' target. In this case, it enables some additional warnings during compilation
-target_compile_options(scratch_engine2 PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(scratch_engine2 PRIVATE -g -Og -Wall -Wextra -Wpedantic)
 
 # Install the 'scratch_engine2' executable to the 'engine' directory located in the project root directory
 install(TARGETS scratch_engine2 DESTINATION ${CMAKE_SOURCE_DIR}/engine)
