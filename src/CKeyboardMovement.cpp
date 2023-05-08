@@ -31,6 +31,7 @@ void CKeyboardMovement::Update(float deltaTime) {
      * for testing implement an animation state machine independent from
      * keyboard component
      */
+    owner->transform->SetVelocity(sf::Vector2f(0, 0));
     animation->SetAnimationState(AnimationState::Idle);
   }
 }

@@ -121,6 +121,7 @@ void SceneGame::OnCreate() {
   // add collider component
   auto collider2 = player2->AddComponent<CBoxCollider>();
   collider2->SetSize(100, 200);
+  collider2->SetOffset(0.f, 80.f);
   collider2->SetLayer(CollisionLayer::Player);
 
   // add player object to the ObjectCollector

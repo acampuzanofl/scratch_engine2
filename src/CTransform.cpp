@@ -7,7 +7,7 @@
 #include "Debug.hpp"
 
 CTransform::CTransform(Object* owner)
-    : Component(owner), position(0.f, 0.f), weight(50) {}
+    : Component(owner), position(0.f, 0.f), weight(10) {}
 void CTransform::SetPosition(float x, float y) {
   position.x = x;
   position.y = y;
@@ -33,16 +33,11 @@ void CTransform::SetVelocity(const sf::Vector2f& velocity) {
 const sf::Vector2f& CTransform::GetVelocity() const { return velocity; }
 void CTransform::SetWeight(float weight) { this->weight = weight; }
 void CTransform::Update(float dt) {
-  position += velocity * dt;
-
   /**
-   * TODO: if weight is too big velcocity can be negative
-   * this results in undefined behavior. For now, as long as
-   * weight is < 60, it seems to be fine. Turns out the behavior
-   * causes the position/velocity to oscilate between positive and negative
-   * this needs to be fixed properly.
+   * TODO: velocity component will be added later on, this implementation
+   * is temporary for testing. TODO: need an acceleration component. Something
+   * that can handle deaccelerating, reducing the velocity to 0 over time.
    */
-  assert(weight < 60);
-  velocity *= 1.f - weight * dt;
+  position += velocity * dt;
 }
 void CTransform::SetMoveSpeed(int moveSpeed) { this->moveSpeed = moveSpeed; }

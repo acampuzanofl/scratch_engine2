@@ -34,6 +34,14 @@ std::map<std::string, json> SpriteMap::GetFrames(
     auto filename = it["filename"].dump();
     if (filename.compare(1, animationName.size(), animationName, 0,
                          animationName.size()) == 0) {
+      /**
+       * TODO: I am trying to add each frame to the list based on the number
+       * in the file name. I want to sort the names based off of file name.
+       * There should be a number at the end of each frame specifiying it's
+       * position relative to the other frames. Right now the sorting only works
+       * if the numbers in the filenames are the same length. Need to either
+       * rename the files or find a way to sort files like these.
+       */
       sorted[filename] = it;
     }
   }

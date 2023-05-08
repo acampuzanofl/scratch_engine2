@@ -100,3 +100,5 @@ void CBoxCollider::SetSize(float width, float height) {
   AABB.width = width;
   AABB.height = height;
 }
+
+const sf::Vector2f& CBoxCollider::GetOffset() { return offset; }

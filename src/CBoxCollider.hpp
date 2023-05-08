@@ -17,6 +17,7 @@ class CBoxCollider : public CCollider {
   const sf::FloatRect& GetCollidable();
   void SetOffset(const sf::Vector2f& offset);
   void SetOffset(float x, float y);
+  const sf::Vector2f& GetOffset();
   void SetSize(const sf::Vector2f& size);
   void SetSize(float width, float height);
 
