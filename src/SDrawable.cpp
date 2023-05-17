@@ -20,9 +20,17 @@ void SDrawable::Add(std::shared_ptr<Object> object) {
   if (objectsDrawable) {
     DrawLayer layer = objectsDrawable->GetDrawLayer();
     auto itr = drawables.find(layer);
+    /**
+     * Check to see if the layer exists in the map
+     * if it doesn't make a new pair and add it into the map
+     */
     if (itr != drawables.end()) {
       drawables[layer].push_back(objectsDrawable);
     } else {
+      /**
+       * Here we create a new vector of cdrawables for the
+       * new layer that we are going to add.
+       */
       std::vector<std::shared_ptr<CDrawable>> objs;
       objs.push_back(objectsDrawable);
       drawables.insert(std::make_pair(layer, objs));
