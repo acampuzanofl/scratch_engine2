@@ -123,3 +123,4 @@ std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
 }
 
 sf::Sprite CSprite::GetSprite() const { return sprite; }
+bool CSprite::ContinueToDraw() const { return !owner->IsQueuedForRemoval(); }

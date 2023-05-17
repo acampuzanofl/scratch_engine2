@@ -38,6 +38,7 @@ class CSprite : public Component, public CDrawable {
       const std::string &animationName, float animationSpeed);
 
   sf::Sprite GetSprite() const;
+  bool ContinueToDraw() const override;
 
  private:
   ResourceAllocator<sf::Texture> *textureAllocator;

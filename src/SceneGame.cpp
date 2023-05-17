@@ -11,6 +11,7 @@
 #include "CAnimation.hpp"
 #include "CBoxCollider.hpp"
 #include "CCollider.hpp"
+#include "CDrawable.hpp"
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
 #include "Component.hpp"
@@ -45,10 +46,12 @@ void SceneGame::OnCreate() {
   // set texture and spritemap allocator for csprite component
   sprite->SetAllocator(&textureAllocator);
   sprite->SetAllocator(&spriteMapAllocator);
+  sprite->SetDrawLayer(DrawLayer::Entities);
 
   // set texture and spritemap allocator for csprite component
   sprite2->SetAllocator(&textureAllocator);
   sprite2->SetAllocator(&spriteMapAllocator);
+  sprite2->SetDrawLayer(DrawLayer::Entities);
 
   // add texture and sprite map using load
   sprite->Load(

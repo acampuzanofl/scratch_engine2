@@ -28,7 +28,9 @@ class SDrawable {
  private:
   void Add(std::shared_ptr<Object> object);
   void Sort();
-  std::vector<std::shared_ptr<Object>> drawables;
+  static bool LayerSort(std::shared_ptr<CDrawable> a,
+                        std::shared_ptr<CDrawable> b);
+  std::map<DrawLayer, std::vector<std::shared_ptr<CDrawable>>> drawables;
 };
 
 #endif
