@@ -10,6 +10,7 @@
 #include "Animation.hpp"
 #include "CAnimation.hpp"
 #include "CBoxCollider.hpp"
+#include "CCamera.hpp"
 #include "CCollider.hpp"
 #include "CDrawable.hpp"
 #include "CKeyboardMovement.hpp"
@@ -19,14 +20,17 @@
 #include "Input.hpp"
 #include "ResourceAllocator.hpp"
 #include "SpriteMap.hpp"
+#include "Window.hpp"
 #include "WorkingDirectory.hpp"
 
 SceneGame::SceneGame(WorkingDirectory &workingDir,
                      ResourceAllocator<sf::Texture> &textureAllocator,
-                     ResourceAllocator<SpriteMap> &spriteMapAllocator)
+                     ResourceAllocator<SpriteMap> &spriteMapAllocator,
+                     Window &window)
     : textureAllocator(textureAllocator),
       spriteMapAllocator(spriteMapAllocator),
-      assetsDir(workingDir) {}
+      assetsDir(workingDir),
+      window(window) {}
 
 void SceneGame::OnCreate() {
   // create a temporary player object
@@ -126,6 +130,17 @@ void SceneGame::OnCreate() {
   collider2->SetSize(100, 200);
   collider2->SetOffset(0.f, 80.f);
   collider2->SetLayer(CollisionLayer::Player);
+
+  /**
+   * create a camera component and add it to player1
+   * TODO camera is a component of the player but maybe
+   * it makes more sense for the camera to be a component of the scene
+   * have to check implementatinos for fighting games to learn
+   * what makes the most sense
+   */
+
+  auto camera = player->AddComponent<CCamera>();
+  camera->SetWindow(&window);
 
   // add player object to the ObjectCollector
   objects.Add(player);

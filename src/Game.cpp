@@ -13,7 +13,7 @@ Game::Game() : window("scratch engine"), workingDir("assets") {
       std::make_shared<SceneSplashScreen>(workingDir, sceneStateMachine, window,
                                           textureAllocator);
   std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>(
-      workingDir, textureAllocator, spriteMapAllocator);
+      workingDir, textureAllocator, spriteMapAllocator, window);
 
   // add scenes to map
   unsigned int splashScreenID = sceneStateMachine.Add(splashScreen);
@@ -31,7 +31,7 @@ Game::Game() : window("scratch engine"), workingDir("assets") {
 
 void Game::Update() {
   // Handle window events
-  window.HandleEvents();
+  window.Update();
 
   // update scene
   sceneStateMachine.Update(deltaTime);
@@ -44,13 +44,13 @@ void Game::LateUpdate() {
 
 void Game::Draw() {
   // clear the screen
-  window.Clear();
+  window.BeginDraw();
 
   // draw objects
   sceneStateMachine.Draw(window);
 
   // update screen with new drawings
-  window.Update();
+  window.EndDraw();
 }
 
 bool Game::IsRunning() const {

@@ -39,7 +39,7 @@ void SceneSplashScreen::OnCreate() {
   splashSprite.setScale(0.8f, 0.8f);
 
   // position sprite to center of screen
-  sf::Vector2u windowCenter = window.GetCenter();
+  sf::Vector2f windowCenter = window.GetCenter();
   splashSprite.setPosition(windowCenter.x, windowCenter.y);
 }
 

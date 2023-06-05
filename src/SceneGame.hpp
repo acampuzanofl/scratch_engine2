@@ -20,7 +20,7 @@ class SceneGame : public Scene {
  public:
   SceneGame(WorkingDirectory &workingDir,
             ResourceAllocator<sf::Texture> &textureAllocator,
-            ResourceAllocator<SpriteMap> &spriteMap);
+            ResourceAllocator<SpriteMap> &spriteMap, Window &Window);
   void OnCreate() override;
   void OnDestroy() override;
   void OnActivate() override;
@@ -36,6 +36,7 @@ class SceneGame : public Scene {
   Input input;
   Input input2;
   ObjectCollection objects;
+  Window &window;
 };
 
 #endif

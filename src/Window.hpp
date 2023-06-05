@@ -1,25 +1,30 @@
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef Window_hpp
+#define Window_hpp
 
-#include <SFML/System/Vector2.hpp>
-
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
 class Window {
  public:
   Window(const std::string& windowName);
 
-  void HandleEvents();
-  void Clear();
+  void Update();
+
+  void BeginDraw();
   void Draw(const sf::Drawable& drawable);
   void Draw(const sf::Vertex* vertices, std::size_t vertexCount,
             sf::PrimitiveType type);
-  void Update();
+  void EndDraw();
+
+  sf::Vector2f GetCenter() const;
+  sf::FloatRect GetViewSpace() const;
+
+  const sf::View& GetView() const;
+  void SetView(const sf::View& view);
+
   bool IsOpen() const;
-  sf::Vector2u GetCenter() const;
 
  private:
   sf::RenderWindow window;
 };
 
-#endif
+#endif /* Window_hpp */
