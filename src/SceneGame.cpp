@@ -81,6 +81,8 @@ void SceneGame::OnCreate() {
   player1map[Input::Key::Right] = sf::Keyboard::Right;
   player1map[Input::Key::Up] = sf::Keyboard::Up;
   player1map[Input::Key::Down] = sf::Keyboard::Down;
+  player1map[Input::Key::Zoomin] = sf::Keyboard::PageUp;
+  player1map[Input::Key::Zoomout] = sf::Keyboard::PageDown;
   input.SubscribeToKeys(player1map);
 
   // setting defualt keymap for player2
@@ -141,6 +143,7 @@ void SceneGame::OnCreate() {
 
   auto camera = player->AddComponent<CCamera>();
   camera->SetWindow(&window);
+  camera->SetInput(&input);
 
   // add player object to the ObjectCollector
   objects.Add(player);
