@@ -11,7 +11,7 @@
 
 // CAnimation Is responsible for setting and updating animation for the owner
 // The owner must have a CSprite
-enum class AnimationState { None, Idle, Walk };
+enum class AnimationState { None, Idle, Walk, A, B, C, D };
 
 class CAnimation : public Component {
  public:
@@ -22,7 +22,6 @@ class CAnimation : public Component {
   void SetAnimationState(AnimationState state);
   const AnimationState& GetCurrentAnimationState() const;
   const std::shared_ptr<Animation>& GetCurrentAnimation() const;
-  void SetAnimationDirection(FacingDirection dir);
   void SetCurrentFrame();
 
  private:

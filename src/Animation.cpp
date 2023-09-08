@@ -3,25 +3,12 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "SpriteMap.hpp"
 
-Animation::Animation(FacingDirection direction)
-    : currentFrame(0), currentFrameTime(0.f), currentDirection(direction) {}
-
-void Animation::SetDirection(FacingDirection dir) {
-  if (currentDirection != dir) {
-    currentDirection = dir;
-    for (auto& f : *frames) {
-      f.framex += f.framewidth;
-      f.framewidth *= -1;
-    }
-  }
-}
-
-FacingDirection Animation::GetCurrentDirection() const {
-  return currentDirection;
-}
+Animation::Animation() : currentFrame(0), currentFrameTime(0.f) {}
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height,
                          float frameTIme) {
@@ -55,6 +42,9 @@ bool Animation::Update(float deltaTime) {
   if (currentFrameTime >= (*frames)[currentFrame].displayTimeSeconds) {
     currentFrameTime = 0.f;
     IncrementFrame();
+    // TODO this will perform the action for the the frame is drawn?
+    // test to see if this is janky and do we need to implement in another way
+    DoCallbacks();
     return true;
   }
   return false;
@@ -72,3 +62,38 @@ void Animation::Reset() {
 // debugging functions
 int Animation::GetCurrentFrameIndex() const { return currentFrame; }
 int Animation::GetAnimationSize() const { return frames->size(); }
+
+void Animation::AddFrameCallback(unsigned int frame, FrameCallback callback) {
+  // if the requested frame is larger that the number of animation frames
+  // then this request is ignored.
+  if (frame < frames->size()) {
+    auto framecallback = callbacks.find(frame);
+    if (framecallback == callbacks.end()) {
+      // if there is not an existing entry for this frame
+      // we create one.
+      // TODO this will only work for a maximum of 64 frames?
+      // Thats probably not a problem but it could be
+      callbackMask.SetBit(frame);
+      callbacks.insert(
+          std::make_pair(frame, std::vector<FrameCallback>{callback}));
+    } else {
+      // An existing entry was found so we
+      // add the action to the vector
+      framecallback->second.emplace_back(callback);
+    }
+  }
+}
+
+void Animation::DoCallbacks() {
+  if (callbacks.size() > 0) {
+    // TODO can use bitmask as quick way of checking if frame has an action
+    if (callbackMask.GetBit(currentFrame)) {
+      // iterate through the list of callbacks for the current frame and call
+      // them
+      auto framecallback = callbacks.at(currentFrame);
+      for (auto f : framecallback) {
+        f();
+      }
+    }
+  }
+}

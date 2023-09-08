@@ -12,7 +12,7 @@ void CCamera::LateUpdate(float deltaTime) {
     sf::View view = window->GetView();
     const sf::Vector2f& targerPos = owner->transform->GetPosition();
     // TODO remove hard coded value of y
-    view.setCenter(targerPos.x, 500);
+    view.setCenter(targerPos.x, targerPos.y);
     window->SetView(view);
   }
 

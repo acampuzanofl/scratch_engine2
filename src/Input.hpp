@@ -11,7 +11,20 @@
 
 class Input {
  public:
-  enum class Key { None, Left, Right, Up, Down, Exit, Zoomin, Zoomout };
+  enum class Key {
+    None,
+    Left,
+    Right,
+    Up,
+    Down,
+    A,
+    B,
+    C,
+    D,
+    Exit,
+    Zoomin,
+    Zoomout
+  };
   typedef std::map<Key, sf::Keyboard::Key> KeyMap;
 
   void PollKey();

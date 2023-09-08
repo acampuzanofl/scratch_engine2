@@ -60,12 +60,6 @@ const std::shared_ptr<Animation> &CAnimation::GetCurrentAnimation() const {
   return currentAnimation.second;
 }
 
-void CAnimation::SetAnimationDirection(FacingDirection dir) {
-  if (currentAnimation.first != AnimationState::None) {
-    currentAnimation.second->SetDirection(dir);
-  }
-}
-
 void CAnimation::SetCurrentFrame() {
   const SpriteMapData *currentFrame =
       currentAnimation.second->GetCurrentFrame();

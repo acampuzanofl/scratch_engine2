@@ -13,8 +13,10 @@
 #include "CCamera.hpp"
 #include "CCollider.hpp"
 #include "CDrawable.hpp"
+#include "CKeyboardAttack.hpp"
 #include "CKeyboardMovement.hpp"
 #include "CSprite.hpp"
+#include "CVelocity.hpp"
 #include "Component.hpp"
 #include "Debug.hpp"
 #include "Input.hpp"
@@ -71,30 +73,36 @@ void SceneGame::OnCreate() {
 
   // add keyboard component for player
   auto movement = player->AddComponent<CKeyboardMovement>();
+  auto attack = player->AddComponent<CKeyboardAttack>();
 
   // add keyboard component for player
   auto movement2 = player2->AddComponent<CKeyboardMovement>();
 
   // setting defualt keymap for player1
   Input::KeyMap player1map;
-  player1map[Input::Key::Left] = sf::Keyboard::Left;
-  player1map[Input::Key::Right] = sf::Keyboard::Right;
-  player1map[Input::Key::Up] = sf::Keyboard::Up;
-  player1map[Input::Key::Down] = sf::Keyboard::Down;
-  player1map[Input::Key::Zoomin] = sf::Keyboard::PageUp;
-  player1map[Input::Key::Zoomout] = sf::Keyboard::PageDown;
+  player1map[Input::Key::Left] = sf::Keyboard::A;
+  player1map[Input::Key::Right] = sf::Keyboard::D;
+  player1map[Input::Key::Up] = sf::Keyboard::W;
+  player1map[Input::Key::Down] = sf::Keyboard::S;
+  player1map[Input::Key::B] = sf::Keyboard::J;
+
+  // debugging events
+  player1map[Input::Key::Zoomin] = sf::Keyboard::Q;
+  player1map[Input::Key::Zoomout] = sf::Keyboard::E;
   input.SubscribeToKeys(player1map);
 
   // setting defualt keymap for player2
   Input::KeyMap player2map;
-  player2map[Input::Key::Left] = sf::Keyboard::A;
-  player2map[Input::Key::Right] = sf::Keyboard::D;
-  player2map[Input::Key::Up] = sf::Keyboard::W;
-  player2map[Input::Key::Down] = sf::Keyboard::S;
+  player2map[Input::Key::Left] = sf::Keyboard::Left;
+  player2map[Input::Key::Right] = sf::Keyboard::Right;
+  player2map[Input::Key::Up] = sf::Keyboard::Up;
+  player2map[Input::Key::Down] = sf::Keyboard::Down;
   input2.SubscribeToKeys(player2map);
 
   // setting input object for movement component
   movement->SetInput(&input);
+  // setting input object for attack component
+  attack->SetInput(&input);
 
   // setting input object for movement component
   movement2->SetInput(&input2);
@@ -110,6 +118,8 @@ void SceneGame::OnCreate() {
       sprite->CreateAnimationFromSpriteMap("WagnerIdle", .1f);
   std::shared_ptr<Animation> walkAnimation =
       sprite->CreateAnimationFromSpriteMap("WagnerWalk", .1f);
+  std::shared_ptr<Animation> BAnimation =
+      sprite->CreateAnimationFromSpriteMap("WagnerB", .05f);
 
   // create an animation using the sprite map and sprite sheet
   std::shared_ptr<Animation> mashidleAnimation =
@@ -118,6 +128,7 @@ void SceneGame::OnCreate() {
   // add the created animation to the animation component
   animation->AddAnimation(AnimationState::Idle, idleAnimation);
   animation->AddAnimation(AnimationState::Walk, walkAnimation);
+  animation->AddAnimation(AnimationState::B, BAnimation);
 
   // add the created animation to the animation component
   animation2->AddAnimation(AnimationState::Idle, mashidleAnimation);
@@ -144,6 +155,9 @@ void SceneGame::OnCreate() {
   auto camera = player->AddComponent<CCamera>();
   camera->SetWindow(&window);
   camera->SetInput(&input);
+
+  // add velocity component to player
+  auto velocity = player->AddComponent<CVelocity>();
 
   // add player object to the ObjectCollector
   objects.Add(player);

@@ -115,8 +115,7 @@ std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
   std::shared_ptr<SpriteMap> spriteMap =
       spriteMapAllocator->Get(currentSpriteMapid);
 
-  std::shared_ptr<Animation> animation =
-      std::make_shared<Animation>(FacingDirection::Right);
+  std::shared_ptr<Animation> animation = std::make_shared<Animation>();
   animation->AddFrameList(spriteMap->CreateSpriteMapData(
       currentTextureId, animationName, animationSpeed));
   return animation;
