@@ -12,6 +12,7 @@ class CKeyboardMovement : public Component {
   CKeyboardMovement(Object* owner);
   void Awake() override;
   void SetInput(Input* input);
+  Input* GetInput();
   void SetMovementSpeed(float moveSpeed);
   void Update(float deltaTime) override;
 

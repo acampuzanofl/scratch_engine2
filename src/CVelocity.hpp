@@ -20,6 +20,7 @@ class CVelocity : public Component {
   void ClampVelocity();
   sf::Vector2f velocity;
   sf::Vector2f maxVelocity;
+  sf::Vector2f minVelocity;
   float weight;
 };
 #endif

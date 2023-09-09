@@ -6,7 +6,10 @@
 #include "Object.hpp"
 
 CVelocity::CVelocity(Object* owner)
-    : Component(owner), maxVelocity(500.f, 500.f), weight(10) {}
+    : Component(owner),
+      maxVelocity(500.f, 500.f),
+      minVelocity(5, 5),
+      weight(10) {}
 
 void CVelocity::Update(float deltatime) {
   owner->transform->AddPosition(velocity * deltatime);
@@ -42,6 +45,13 @@ void CVelocity::ClampVelocity() {
       velocity.y = -maxVelocity.y;
     }
   }
+  if (fabs(velocity.x) < minVelocity.x) {
+    velocity.x = 0.f;
+  }
+
+  // if (fabs(velocity.y) < minVelocity.y) {
+  //   velocity.y = maxVelocity.y;
+  // }
 }
 
 void CVelocity::SetWeight(float weight) { this->weight = weight; }

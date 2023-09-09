@@ -8,6 +8,7 @@
 #include "CVelocity.hpp"
 #include "Component.hpp"
 #include "Debug.hpp"
+#include "Input.hpp"
 #include "Object.hpp"
 
 /**
@@ -20,6 +21,7 @@ CKeyboardMovement::CKeyboardMovement(Object* owner)
     : Component(owner), moveSpeed(300.f) {}
 void CKeyboardMovement::Awake() { velocity = owner->GetComponent<CVelocity>(); }
 void CKeyboardMovement::SetInput(Input* input) { this->input = input; }
+Input* CKeyboardMovement::GetInput() { return input; }
 void CKeyboardMovement::SetMovementSpeed(float moveSpeed) {
   this->moveSpeed = moveSpeed;
 }

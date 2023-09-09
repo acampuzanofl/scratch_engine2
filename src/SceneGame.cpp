@@ -15,6 +15,7 @@
 #include "CDrawable.hpp"
 #include "CKeyboardAttack.hpp"
 #include "CKeyboardMovement.hpp"
+#include "CMovementAnimation.hpp"
 #include "CSprite.hpp"
 #include "CVelocity.hpp"
 #include "Component.hpp"
@@ -158,6 +159,9 @@ void SceneGame::OnCreate() {
 
   // add velocity component to player
   auto velocity = player->AddComponent<CVelocity>();
+
+  // add movement animation to player
+  auto movementanim = player->AddComponent<CMovementAnimation>();
 
   // add player object to the ObjectCollector
   objects.Add(player);
