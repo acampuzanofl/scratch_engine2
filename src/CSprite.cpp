@@ -111,13 +111,14 @@ void CSprite::SetTextureRect(const sf::IntRect &rect) {
 }
 
 std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
-    const std::string &animationName, float animationSpeed) {
+    const std::string &animationName, float animationSpeed, bool loop) {
   std::shared_ptr<SpriteMap> spriteMap =
       spriteMapAllocator->Get(currentSpriteMapid);
 
   std::shared_ptr<Animation> animation = std::make_shared<Animation>();
   animation->AddFrameList(spriteMap->CreateSpriteMapData(
-      currentTextureId, animationName, animationSpeed));
+                              currentTextureId, animationName, animationSpeed),
+                          loop);
   return animation;
 }
 

@@ -17,12 +17,15 @@ class Animation {
  public:
   Animation();
   void AddFrame(int textureID, int x, int y, int width, int height,
-                float frameTime);
-  void AddFrameList(std::shared_ptr<std::vector<SpriteMapData>> frameList);
+                float frameTime, bool looped);
+  void AddFrameList(std::shared_ptr<std::vector<SpriteMapData>> frameList,
+                    bool loop);
   const SpriteMapData* GetCurrentFrame() const;
   bool Update(float deltaTime);
   void Reset();
   void AddFrameCallback(unsigned int frame, FrameCallback callback);
+  void SetLooped(bool looped);
+  bool isLooped();
 
   // Debugging functions
   int GetCurrentFrameIndex() const;
@@ -32,10 +35,11 @@ class Animation {
   void IncrementFrame();
   void DoCallbacks();
   std::shared_ptr<std::vector<SpriteMapData>> frames;
-  int currentFrame;
+  unsigned int currentFrame;
   float currentFrameTime;
   std::map<int, std::vector<FrameCallback>> callbacks;
   Bitmask callbackMask;
+  bool isLoop;
 };
 
 #endif

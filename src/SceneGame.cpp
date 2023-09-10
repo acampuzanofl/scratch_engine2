@@ -116,9 +116,9 @@ void SceneGame::OnCreate() {
 
   // create an animation using the sprite map and sprite sheet
   std::shared_ptr<Animation> idleAnimation =
-      sprite->CreateAnimationFromSpriteMap("WagnerIdle", .1f);
+      sprite->CreateAnimationFromSpriteMap("WagnerIdle", .1f, true);
   std::shared_ptr<Animation> walkAnimation =
-      sprite->CreateAnimationFromSpriteMap("WagnerWalk", .1f);
+      sprite->CreateAnimationFromSpriteMap("WagnerWalk", .1f, true);
   std::shared_ptr<Animation> BAnimation =
       sprite->CreateAnimationFromSpriteMap("WagnerB", .05f);
 
@@ -167,7 +167,7 @@ void SceneGame::OnCreate() {
   objects.Add(player);
 
   // add player object to the ObjectCollector
-  objects.Add(player2);
+  // objects.Add(player2);
 }
 
 void SceneGame::OnActivate() {}

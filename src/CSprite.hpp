@@ -35,7 +35,8 @@ class CSprite : public Component, public CDrawable {
   void SetTextureRect(int x, int y, int width, int height);
   void SetTextureRect(const sf::IntRect &rect);
   std::shared_ptr<Animation> CreateAnimationFromSpriteMap(
-      const std::string &animationName, float animationSpeed);
+      const std::string &animationName, float animationSpeed,
+      bool loop = false);
 
   sf::Sprite GetSprite() const;
   bool ContinueToDraw() const override;

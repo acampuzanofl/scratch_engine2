@@ -21,6 +21,8 @@ class CAnimation : public Component {
   void AddAnimation(AnimationState state, std::shared_ptr<Animation> animation);
   void SetAnimationState(AnimationState state);
   const AnimationState& GetCurrentAnimationState() const;
+  const std::shared_ptr<Animation>& GetAnimationByState(
+      AnimationState state) const;
   const std::shared_ptr<Animation>& GetCurrentAnimation() const;
   void SetCurrentFrame();
 

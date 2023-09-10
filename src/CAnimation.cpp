@@ -67,3 +67,8 @@ void CAnimation::SetCurrentFrame() {
   sprite->SetTextureRect(currentFrame->framex, currentFrame->framey,
                          currentFrame->framewidth, currentFrame->frameheight);
 }
+
+const std::shared_ptr<Animation> &CAnimation::GetAnimationByState(
+    AnimationState state) const {
+  return animations.find(state)->second;
+}

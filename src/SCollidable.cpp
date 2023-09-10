@@ -91,14 +91,14 @@ void SCollidable::Resolve() {
          *  create a getter. Also make transorm privatea and make a getter
          */
 
+        // draw collision boxes
+        Debug::DrawRect(collision->GetCollidable());
+        Debug::DrawRect(collidable->GetCollidable());
+
         if (collidable->GetOwner()->instanceId->GetInstanceId() ==
             collision->GetOwner()->instanceId->GetInstanceId()) {
           continue;
         }
-
-        // draw collision boxes
-        Debug::DrawRect(collision->GetCollidable());
-        Debug::DrawRect(collidable->GetCollidable());
 
         /**
          * We check if the layers are allowed to collide, This should be

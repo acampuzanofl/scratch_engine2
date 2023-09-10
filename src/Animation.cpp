@@ -8,10 +8,10 @@
 
 #include "SpriteMap.hpp"
 
-Animation::Animation() : currentFrame(0), currentFrameTime(0.f) {}
+Animation::Animation() : currentFrame(0), currentFrameTime(0.f), isLoop(true) {}
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height,
-                         float frameTIme) {
+                         float frameTIme, bool looped) {
   SpriteMapData data = {};
   data.id = textureID;
   data.framex = x;
@@ -20,11 +20,13 @@ void Animation::AddFrame(int textureID, int x, int y, int width, int height,
   data.frameheight = height;
   data.displayTimeSeconds = frameTIme;
   frames->push_back(data);
+  isLoop = looped;
 }
 
 void Animation::AddFrameList(
-    std::shared_ptr<std::vector<SpriteMapData>> frameData) {
+    std::shared_ptr<std::vector<SpriteMapData>> frameData, bool looped) {
   frames = frameData;
+  isLoop = looped;
 }
 
 const SpriteMapData* Animation::GetCurrentFrame() const {
@@ -38,14 +40,17 @@ bool Animation::Update(float deltaTime) {
   assert(frames != nullptr);
   assert(frames->size() > 0);
 
-  currentFrameTime += deltaTime;
-  if (currentFrameTime >= (*frames)[currentFrame].displayTimeSeconds) {
-    currentFrameTime = 0.f;
-    IncrementFrame();
-    // TODO this will perform the action for the the frame is drawn?
-    // test to see if this is janky and do we need to implement in another way
-    DoCallbacks();
-    return true;
+  // We now also check if animation is looped
+  if (frames->size() > 1 && (isLoop || currentFrame < frames->size() - 1)) {
+    currentFrameTime += deltaTime;
+    if (currentFrameTime >= (*frames)[currentFrame].displayTimeSeconds) {
+      currentFrameTime = 0.f;
+      IncrementFrame();
+      // TODO this will perform the action for the the frame is drawn?
+      // test to see if this is janky and do we need to implement in another way
+      DoCallbacks();
+      return true;
+    }
   }
   return false;
 }
@@ -97,3 +102,6 @@ void Animation::DoCallbacks() {
     }
   }
 }
+
+bool Animation::isLooped() { return isLoop; }
+void Animation::SetLooped(bool looped) { isLoop = looped; }
