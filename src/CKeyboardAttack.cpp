@@ -11,9 +11,10 @@ void CKeyboardAttack::Awake() {
    * of a oneshot animation. The proper solution would be to implement
    * an animation state machine. Im suprised this worked first try though
    */
-  animation->GetAnimationByState(AnimationState::B)
-      ->AddFrameCallback(
-          9, [this]() { animation->SetAnimationState(AnimationState::Idle); });
+  auto battack = animation->GetAnimationByState(AnimationState::B);
+  battack->AddFrameCallback(battack->GetAnimationSize() - 1, [this]() {
+    animation->SetAnimationState(AnimationState::Idle);
+  });
 }
 void CKeyboardAttack::Update(float deltaTime) {
   if (input->IsKeyPressed(Input::Key::B)) {
