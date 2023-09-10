@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "CAnimation.hpp"
 #include "CVelocity.hpp"
 #include "Component.hpp"
 #include "Input.hpp"
@@ -20,6 +21,7 @@ class CKeyboardMovement : public Component {
   float moveSpeed;
   Input* input;
   std::shared_ptr<CVelocity> velocity;
+  std::shared_ptr<CAnimation> animation;
 };
 
 #endif

@@ -19,7 +19,10 @@
  */
 CKeyboardMovement::CKeyboardMovement(Object* owner)
     : Component(owner), moveSpeed(300.f) {}
-void CKeyboardMovement::Awake() { velocity = owner->GetComponent<CVelocity>(); }
+void CKeyboardMovement::Awake() {
+  velocity = owner->GetComponent<CVelocity>();
+  animation = owner->GetComponent<CAnimation>();
+}
 void CKeyboardMovement::SetInput(Input* input) { this->input = input; }
 Input* CKeyboardMovement::GetInput() { return input; }
 void CKeyboardMovement::SetMovementSpeed(float moveSpeed) {
@@ -27,6 +30,17 @@ void CKeyboardMovement::SetMovementSpeed(float moveSpeed) {
 }
 void CKeyboardMovement::Update(float deltaTime) {
   assert(input != nullptr);
+
+  /**
+   * TODO
+   * This is a temporary solution to get the "feeling" of the movement
+   * and animation correct. But this is not a good of implementing
+   * The keyboard componenent should not interact with th animatino component
+   * The keyboard componoent should know nothing about what animation is running
+   */
+  if (animation->GetCurrentAnimationState() == AnimationState::B) {
+    return;
+  }
 
   // Update movement
   if (input->IsKeyPressed(Input::Key::Left)) {
