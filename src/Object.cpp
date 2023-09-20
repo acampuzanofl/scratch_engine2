@@ -5,8 +5,10 @@
 #include "CDrawable.hpp"
 #include "CInstanceId.hpp"
 #include "CTransform.hpp"
+#include "SharedContext.hpp"
 
-Object::Object() : queuedForRemoval(false) {
+Object::Object(SharedContext* context)
+    : context(context), queuedForRemoval(false) {
   transform = AddComponent<CTransform>();
   instanceId = AddComponent<CInstanceId>();
 }

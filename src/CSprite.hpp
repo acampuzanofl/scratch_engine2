@@ -28,8 +28,6 @@ class CSprite : public Component, public CDrawable {
   void Load(const std::string &textureFilePath,
             const std::string &spriteMapFilePath);
   void Load(int textureid, int spriteMapid);
-  void SetAllocator(ResourceAllocator<sf::Texture> *allocator);
-  void SetAllocator(ResourceAllocator<SpriteMap> *allocator);
   void LateUpdate(float deltaTime) override;
   void Draw(Window &window) override;
   void SetTextureRect(int x, int y, int width, int height);
@@ -42,8 +40,6 @@ class CSprite : public Component, public CDrawable {
   bool ContinueToDraw() const override;
 
  private:
-  ResourceAllocator<sf::Texture> *textureAllocator;
-  ResourceAllocator<SpriteMap> *spriteMapAllocator;
   sf::Sprite sprite;
   int currentTextureId;
   int currentSpriteMapid;

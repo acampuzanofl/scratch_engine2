@@ -37,6 +37,7 @@ class SceneGame : public Scene {
   Input input2;
   ObjectCollection objects;
   Window &window;
+  SharedContext context;
 };
 
 #endif

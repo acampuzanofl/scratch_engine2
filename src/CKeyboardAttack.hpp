@@ -8,10 +8,8 @@ class CKeyboardAttack : public Component {
   CKeyboardAttack(Object* owner);
   void Awake() override;
   void Update(float deltaTime) override;
-  void SetInput(Input* input);
 
  private:
   std::shared_ptr<CAnimation> animation;
-  Input* input;
 };
 #endif /* ckeyboardattack_hpp */

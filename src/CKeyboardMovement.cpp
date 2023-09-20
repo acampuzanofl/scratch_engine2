@@ -23,13 +23,11 @@ void CKeyboardMovement::Awake() {
   velocity = owner->GetComponent<CVelocity>();
   animation = owner->GetComponent<CAnimation>();
 }
-void CKeyboardMovement::SetInput(Input* input) { this->input = input; }
-Input* CKeyboardMovement::GetInput() { return input; }
 void CKeyboardMovement::SetMovementSpeed(float moveSpeed) {
   this->moveSpeed = moveSpeed;
 }
 void CKeyboardMovement::Update(float deltaTime) {
-  assert(input != nullptr);
+  assert(owner->context->input != nullptr);
 
   /**
    * TODO
@@ -43,9 +41,9 @@ void CKeyboardMovement::Update(float deltaTime) {
   }
 
   // Update movement
-  if (input->IsKeyPressed(Input::Key::Left)) {
+  if (owner->context->input->IsKeyPressed(Input::Key::Left)) {
     velocity->Set(sf::Vector2f(-200, 0));
-  } else if (input->IsKeyPressed(Input::Key::Right)) {
+  } else if (owner->context->input->IsKeyPressed(Input::Key::Right)) {
     velocity->Set(sf::Vector2f(200, 0));
   }
 }

@@ -20,18 +20,11 @@
 
 CSprite::CSprite(Object *owner) : Component(owner), currentTextureId(-1) {}
 
-void CSprite::SetAllocator(ResourceAllocator<sf::Texture> *allocator) {
-  this->textureAllocator = allocator;
-}
-
-void CSprite::SetAllocator(ResourceAllocator<SpriteMap> *allocator) {
-  this->spriteMapAllocator = allocator;
-}
-
 void CSprite::Load(int textureid) {
   if (textureid >= 0 && textureid != currentTextureId) {
     currentTextureId = textureid;
-    std::shared_ptr<sf::Texture> texture = textureAllocator->Get(textureid);
+    std::shared_ptr<sf::Texture> texture =
+        owner->context->textureAllocator->Get(textureid);
     sprite.setTexture(*texture);
   }
 }
@@ -39,7 +32,8 @@ void CSprite::Load(int textureid) {
 void CSprite::Load(int textureid, int spritemapid) {
   if (textureid >= 0 && textureid != currentTextureId) {
     currentTextureId = textureid;
-    std::shared_ptr<sf::Texture> texture = textureAllocator->Get(textureid);
+    std::shared_ptr<sf::Texture> texture =
+        owner->context->textureAllocator->Get(textureid);
     sprite.setTexture(*texture);
   }
   if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
@@ -48,11 +42,12 @@ void CSprite::Load(int textureid, int spritemapid) {
 }
 
 void CSprite::Load(const std::string &textureFilePath) {
-  if (textureAllocator) {
-    int textureID = textureAllocator->Add(textureFilePath);
+  if (owner->context->textureAllocator) {
+    int textureID = owner->context->textureAllocator->Add(textureFilePath);
     if (textureID >= 0 && textureID != currentTextureId) {
       currentTextureId = textureID;
-      std::shared_ptr<sf::Texture> texture = textureAllocator->Get(textureID);
+      std::shared_ptr<sf::Texture> texture =
+          owner->context->textureAllocator->Get(textureID);
       sprite.setTexture(*texture);
     }
   }
@@ -60,18 +55,20 @@ void CSprite::Load(const std::string &textureFilePath) {
 
 void CSprite::Load(const std::string &textureFilePath,
                    const std::string &spriteMapFilePath) {
-  if (textureAllocator) {
-    int textureID = textureAllocator->Add(textureFilePath);
+  if (owner->context->textureAllocator) {
+    int textureID = owner->context->textureAllocator->Add(textureFilePath);
     if (textureID >= 0 && textureID != currentTextureId) {
       currentTextureId = textureID;
-      std::shared_ptr<sf::Texture> texture = textureAllocator->Get(textureID);
+      std::shared_ptr<sf::Texture> texture =
+          owner->context->textureAllocator->Get(textureID);
       sprite.setTexture(*texture);
     }
   } else {
     std::cout << "\033[91mtexture allocator not set\n\033[0m";
   }
-  if (spriteMapAllocator) {
-    int spritemapid = spriteMapAllocator->Add(spriteMapFilePath);
+  if (owner->context->spriteMapAllocator) {
+    int spritemapid =
+        owner->context->spriteMapAllocator->Add(spriteMapFilePath);
     if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
       currentSpriteMapid = spritemapid;
     }
@@ -113,7 +110,7 @@ void CSprite::SetTextureRect(const sf::IntRect &rect) {
 std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
     const std::string &animationName, float animationSpeed, bool loop) {
   std::shared_ptr<SpriteMap> spriteMap =
-      spriteMapAllocator->Get(currentSpriteMapid);
+      owner->context->spriteMapAllocator->Get(currentSpriteMapid);
 
   std::shared_ptr<Animation> animation = std::make_shared<Animation>();
   animation->AddFrameList(spriteMap->CreateSpriteMapData(

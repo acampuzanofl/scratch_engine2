@@ -17,8 +17,7 @@ void CKeyboardAttack::Awake() {
   });
 }
 void CKeyboardAttack::Update(float deltaTime) {
-  if (input->IsKeyPressed(Input::Key::B)) {
+  if (owner->context->input->IsKeyPressed(Input::Key::B)) {
     animation->SetAnimationState(AnimationState::B);
   }
 }
-void CKeyboardAttack::SetInput(Input* input) { this->input = input; }

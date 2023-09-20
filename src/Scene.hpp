@@ -1,6 +1,5 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
-
 #include "Window.hpp"
 
 class Scene {
@@ -16,6 +15,6 @@ class Scene {
   virtual void ProcessInput(){};
   virtual void Update(float /*deltaTime*/){};
   virtual void LateUpdate(float /*deltaTime*/){};
-  virtual void Draw(Window & /*window*/){};
+  virtual void Draw(Window& /*window*/){};
 };
 #endif

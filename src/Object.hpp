@@ -9,10 +9,11 @@
 #include "CInstanceId.hpp"
 #include "CTransform.hpp"
 #include "Component.hpp"
+#include "SharedContext.hpp"
 
 class Object {
  public:
-  Object();
+  Object(SharedContext* context);
   // awake is called when an object is created. Used to ensure
   // required components are present
   void Awake();
@@ -62,6 +63,7 @@ class Object {
   }
   std::shared_ptr<CTransform> transform;
   std::shared_ptr<CInstanceId> instanceId;
+  SharedContext* context;
 
  private:
   std::vector<std::shared_ptr<Component>> components;

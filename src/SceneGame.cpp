@@ -36,12 +36,26 @@ SceneGame::SceneGame(WorkingDirectory &workingDir,
       window(window) {}
 
 void SceneGame::OnCreate() {
+  /**
+   * TODO
+   * make an allocator for the input so that the scene
+   * can container knowledge of different inputs?
+   * idk if thats the best way to do it, we can make 2 different contexts, 1 per
+   * player
+   */
+  context.input = &input;
+  context.objects = &objects;
+  context.workingDir = &assetsDir;
+  context.textureAllocator = &textureAllocator;
+  context.spriteMapAllocator = &spriteMapAllocator;
+  context.window = &window;
+
   // create a temporary player object
-  std::shared_ptr<Object> player = std::make_shared<Object>();
+  std::shared_ptr<Object> player = std::make_shared<Object>(&context);
   player->transform->SetPosition(630.f, 380.f);  // set a starting position
 
   // player2
-  std::shared_ptr<Object> player2 = std::make_shared<Object>();
+  std::shared_ptr<Object> player2 = std::make_shared<Object>(&context);
   player2->transform->SetPosition(230.f, 300.f);  // set a starting position
 
   // Add a sprite component to the player
@@ -51,13 +65,9 @@ void SceneGame::OnCreate() {
   auto sprite2 = player2->AddComponent<CSprite>();
 
   // set texture and spritemap allocator for csprite component
-  sprite->SetAllocator(&textureAllocator);
-  sprite->SetAllocator(&spriteMapAllocator);
   sprite->SetDrawLayer(DrawLayer::Entities);
 
   // set texture and spritemap allocator for csprite component
-  sprite2->SetAllocator(&textureAllocator);
-  sprite2->SetAllocator(&spriteMapAllocator);
   sprite2->SetDrawLayer(DrawLayer::Entities);
 
   // add texture and sprite map using load
@@ -99,14 +109,6 @@ void SceneGame::OnCreate() {
   player2map[Input::Key::Up] = sf::Keyboard::Up;
   player2map[Input::Key::Down] = sf::Keyboard::Down;
   input2.SubscribeToKeys(player2map);
-
-  // setting input object for movement component
-  movement->SetInput(&input);
-  // setting input object for attack component
-  attack->SetInput(&input);
-
-  // setting input object for movement component
-  movement2->SetInput(&input2);
 
   // add animation component
   auto animation = player->AddComponent<CAnimation>();
@@ -155,7 +157,6 @@ void SceneGame::OnCreate() {
 
   auto camera = player->AddComponent<CCamera>();
   camera->SetWindow(&window);
-  camera->SetInput(&input);
 
   // add velocity component to player
   auto velocity = player->AddComponent<CVelocity>();

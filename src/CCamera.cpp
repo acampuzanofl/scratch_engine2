@@ -24,15 +24,14 @@ void CCamera::LateUpdate(float deltaTime) {
    * of each of the characters in the scene. The scene will be responsible
    * for determing how to move the ccamera and when to zoom
    */
-  if (input->IsKeyPressed(Input::Key::Zoomin)) {
+  if (owner->context->input->IsKeyPressed(Input::Key::Zoomin)) {
     SetCameraZoom(*window, 1.1f);
-  } else if (input->IsKeyPressed(Input::Key::Zoomout)) {
+  } else if (owner->context->input->IsKeyPressed(Input::Key::Zoomout)) {
     SetCameraZoom(*window, .9f);
   }
 }
 
 void CCamera::SetWindow(Window* gameWindow) { window = gameWindow; }
-void CCamera::SetInput(Input* input) { this->input = input; }
 void CCamera::SetCameraZoom(Window& window, float zoom) {
   sf::View view = window.GetView();
   view.zoom(zoom);
