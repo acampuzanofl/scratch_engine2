@@ -51,6 +51,14 @@ void SceneGame::OnCreate() {
   context.spriteMapAllocator = &spriteMapAllocator;
   context.window = &window;
 
+  /**
+  * TODO
+  * instead of building player 1 and 2 seperatly
+  * make a function that can build a player and return
+  * it so i only need to modifiy one function to prevent
+  * missing initializers
+  */
+
   context2.input = &input2;
   context2.objects = &objects;
   context2.workingDir = &assetsDir;
