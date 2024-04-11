@@ -38,6 +38,8 @@ class SceneGame : public Scene {
   ObjectCollection objects;
   Window &window;
   SharedContext context;
+  SharedContext context2;
+
 };
 
 #endif

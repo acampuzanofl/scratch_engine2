@@ -3,3 +3,4 @@ engine/*
 .vscode
 .cache
 build
+.gdb_history

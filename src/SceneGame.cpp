@@ -25,6 +25,7 @@
 #include "SpriteMap.hpp"
 #include "Window.hpp"
 #include "WorkingDirectory.hpp"
+#include "CDirection.hpp"
 
 SceneGame::SceneGame(WorkingDirectory &workingDir,
                      ResourceAllocator<sf::Texture> &textureAllocator,
@@ -50,12 +51,19 @@ void SceneGame::OnCreate() {
   context.spriteMapAllocator = &spriteMapAllocator;
   context.window = &window;
 
+  context2.input = &input2;
+  context2.objects = &objects;
+  context2.workingDir = &assetsDir;
+  context2.textureAllocator = &textureAllocator;
+  context2.spriteMapAllocator = &spriteMapAllocator;
+  context2.window = &window;
+
   // create a temporary player object
   std::shared_ptr<Object> player = std::make_shared<Object>(&context);
   player->transform->SetPosition(630.f, 380.f);  // set a starting position
 
   // player2
-  std::shared_ptr<Object> player2 = std::make_shared<Object>(&context);
+  std::shared_ptr<Object> player2 = std::make_shared<Object>(&context2);
   player2->transform->SetPosition(230.f, 300.f);  // set a starting position
 
   // Add a sprite component to the player
@@ -102,7 +110,7 @@ void SceneGame::OnCreate() {
   player1map[Input::Key::Zoomout] = sf::Keyboard::E;
   input.SubscribeToKeys(player1map);
 
-  // setting defualt keymap for player2
+  // setting default keymap for player2
   Input::KeyMap player2map;
   player2map[Input::Key::Left] = sf::Keyboard::Left;
   player2map[Input::Key::Right] = sf::Keyboard::Right;
@@ -160,15 +168,24 @@ void SceneGame::OnCreate() {
 
   // add velocity component to player
   auto velocity = player->AddComponent<CVelocity>();
+  auto velocity2 = player2->AddComponent<CVelocity>();
+
+
+  // add direction componennt
+  auto direction = player->AddComponent<CDirection>();
+  auto direction2 = player2->AddComponent<CDirection>();
+
 
   // add movement animation to player
   auto movementanim = player->AddComponent<CMovementAnimation>();
+  auto movementanim2 = player2->AddComponent<CMovementAnimation>();
+
 
   // add player object to the ObjectCollector
   objects.Add(player);
 
   // add player object to the ObjectCollector
-  // objects.Add(player2);
+  objects.Add(player2);
 }
 
 void SceneGame::OnActivate() {}
