@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Animation.hpp"
+#include "Debug.hpp"
 
 SpriteMap::SpriteMap() {}
 
@@ -46,10 +47,7 @@ std::map<std::string, json> SpriteMap::GetFrames(
     }
   }
   if (sorted.empty()) {
-    std::cout << "\033[91merror: \033[0m"
-              << "\"" << animationName << "\""
-              << " was not found in this SpriteMap. And i don't know how to "
-                 "handle errors so i'm just gana close the game :(\n";
+    Debug::Error("%s was not found in this SpriteMap. And i don't know how to handle errors so i'm just gana close the game :(\n"), animationName);
     exit(EXIT_FAILURE);
   }
   return sorted;

@@ -25,7 +25,7 @@ void CSprite::Load(int textureid) {
     currentTextureId = textureid;
     std::shared_ptr<sf::Texture> texture =
         owner->context->textureAllocator->Get(textureid);
-    sprite.setTexture(*texture);
+    sprite->setTexture(*texture);
   }
 }
 
@@ -34,7 +34,7 @@ void CSprite::Load(int textureid, int spritemapid) {
     currentTextureId = textureid;
     std::shared_ptr<sf::Texture> texture =
         owner->context->textureAllocator->Get(textureid);
-    sprite.setTexture(*texture);
+    sprite->setTexture(*texture);
   }
   if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
     currentSpriteMapid = spritemapid;
@@ -48,7 +48,7 @@ void CSprite::Load(const std::string &textureFilePath) {
       currentTextureId = textureID;
       std::shared_ptr<sf::Texture> texture =
           owner->context->textureAllocator->Get(textureID);
-      sprite.setTexture(*texture);
+      sprite->setTexture(*texture);
     }
   }
 }
@@ -61,7 +61,7 @@ void CSprite::Load(const std::string &textureFilePath,
       currentTextureId = textureID;
       std::shared_ptr<sf::Texture> texture =
           owner->context->textureAllocator->Get(textureID);
-      sprite.setTexture(*texture);
+      sprite->setTexture(*texture);
     }
   } else {
     std::cout << "\033[91mtexture allocator not set\n\033[0m";
@@ -89,22 +89,29 @@ void CSprite::LateUpdate(float /*deltaTime*/) {
   sf::Vector2f origin(currentFrame->sourcewidth / 2.f,
                       currentFrame->sourceheight / 2.f);
 
-  sprite.setOrigin(origin);
-  sprite.setPosition(pos);
+  sprite->setOrigin(origin);
+  sprite->setPosition(pos);
 
   // debug sprite bounding boxes
   // sf::FloatRect boundingRect = sprite.getGlobalBounds();
   // Debug::DrawRect(boundingRect, sf::Color::Green);
 }
 
-void CSprite::Draw(Window &window) { window.Draw(sprite); }
+void CSprite::Draw(Window &window) { 
+        if (sprite) {
+  window.Draw(*sprite);
+    } else {
+        Debug::Error("CSprite::GetSprite() return empty sprite.");
+        exit(EXIT_FAILURE); // Return a default-constructed sprite
+    }
+ }
 
 void CSprite::SetTextureRect(int x, int y, int width, int height) {
-  sprite.setTextureRect(sf::IntRect(x, y, width, height));
+  sprite->setTextureRect(sf::IntRect({x, y}, {width, height}));
 }
 
 void CSprite::SetTextureRect(const sf::IntRect &rect) {
-  sprite.setTextureRect(rect);
+  sprite->setTextureRect(rect);
 }
 
 std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
@@ -119,5 +126,12 @@ std::shared_ptr<Animation> CSprite::CreateAnimationFromSpriteMap(
   return animation;
 }
 
-sf::Sprite CSprite::GetSprite() const { return sprite; }
+sf::Sprite CSprite::GetSprite() const { 
+      if (sprite) {
+        return *sprite; // Return the stored sprite
+    } else {
+        Debug::Error("CSprite::GetSprite() return empty sprite.");
+        exit(EXIT_FAILURE); // Return a default-constructed sprite
+    }
+}
 bool CSprite::ContinueToDraw() const { return !owner->IsQueuedForRemoval(); }

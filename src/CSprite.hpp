@@ -40,7 +40,7 @@ class CSprite : public Component, public CDrawable {
   bool ContinueToDraw() const override;
 
  private:
-  sf::Sprite sprite;
+  std::optional<sf::Sprite> sprite;
   int currentTextureId;
   int currentSpriteMapid;
 };

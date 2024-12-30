@@ -58,3 +58,8 @@ void Debug::DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
 }
 
 void Debug::Log(const std::string& msg) { std::cout << msg << std::endl; }
+void Debug::Error(const std::string& msg) {
+    const std::string redColor = "\033[31m";  // ANSI code for red text
+    const std::string resetColor = "\033[0m"; // ANSI code to reset text color
+    std::cout << redColor << "[ERROR] " << msg << resetColor << std::endl;
+}
