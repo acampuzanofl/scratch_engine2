@@ -11,26 +11,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 # If build type is not specified, set it to Debug
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug FORCE)
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# Find the SFML library and its required components (system, window, and graphics) and add include directories and linker flags to the project
-find_package(SFML 2.5.1 COMPONENTS system window graphics REQUIRED)
-
-# Add the 'src' directory to the list of include directories for the project
-include_directories(${CMAKE_SOURCE_DIR}/src/)
+# Find the SFML library and its required components (system, window, and graphics)
+find_package(SFML COMPONENTS System Window Graphics REQUIRED)
 
 # Search for all source files in the 'src' directory and add them to the variable SRC
-aux_source_directory(src/ SRC)
+file(GLOB SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 # Create an executable named "scratch_engine2" from the source files listed in the SRC variable
 add_executable(scratch_engine2 ${SRC})
 
-# Link the SFML libraries to the 'scratch_engine2' executable
-target_link_libraries(scratch_engine2 sfml-graphics sfml-window sfml-system)
+# Add include directories and linker flags to the 'scratch_engine2' target
+target_include_directories(scratch_engine2 PRIVATE ${CMAKE_SOURCE_DIR}/src/)
+target_link_libraries(scratch_engine2 PRIVATE SFML::Graphics SFML::Window SFML::System)
 
-# Add compiler options to the 'scratch_engine2' target. In this case, it enables some additional warnings during compilation
+# Add compiler options to the 'scratch_engine2' target
 target_compile_options(scratch_engine2 PRIVATE -g -Og -Wall -Wextra -Wpedantic)
 
-# Install the 'scratch_engine2' executable to the 'engine' directory located in the project root directory
-install(TARGETS scratch_engine2 DESTINATION ${CMAKE_SOURCE_DIR}/engine)
+# Install the 'scratch_engine2' executable to the 'bin' directory
+install(TARGETS scratch_engine2 DESTINATION engine)
