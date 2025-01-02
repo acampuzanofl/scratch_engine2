@@ -1,7 +1,7 @@
 #include "Window.hpp"
 
 Window::Window(const std::string& windowName)
-    : window(sf::VideoMode(800, 600), windowName, sf::Style::Titlebar) {
+    : window(sf::VideoMode({800, 600}), windowName, sf::Style::Titlebar) {
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(60);
 
@@ -14,13 +14,16 @@ Window::Window(const std::string& windowName)
    */
 }
 
+
 void Window::Update() {
-  sf::Event event;
-  while (window.pollEvent(event)) {
-    if (event.type == sf::Event::KeyPressed &&
-        event.key.code == sf::Keyboard::Escape) {
+
+  const auto onClose = [this](const sf::Event::Closed&)
+  {
       window.close();
-    }
+  };
+
+  while (window.isOpen()) {
+    window.handleEvents(onClose);
   }
 }
 
