@@ -22,7 +22,7 @@ class SceneSplashScreen : public Scene {
   void SetSwitchToScene(unsigned int id);
 
  private:
-  sf::Sprite splashSprite;
+  std::optional<sf::Sprite> splashSprite;
   WorkingDirectory& workingDirectory;
   SceneStateMachine& sceneStateMachine;
   Window& window;

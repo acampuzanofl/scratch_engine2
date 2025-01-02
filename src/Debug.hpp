@@ -8,6 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <array>
 #include <vector>
+#include <iostream>
 
 #include "Window.hpp"
 
@@ -31,12 +32,13 @@ class Debug {
     std::printf((msg + "\n").c_str(), args...);
   }
 
-  template <typename... Args>
-  static void Error(const std::string& msg, Args... args) {
-        const std::string redColor = "\033[31m";  // ANSI code for red text
-        const std::string resetColor = "\033[0m"; // ANSI code to reset text color
-        std::printf((redColor + msg + resetColor + "\n").c_str(), args...);
-    }
+template <typename... Args>
+static void Error(const std::string& msg, Args... args) {
+    const std::string redColor = "\033[31m";
+    const std::string resetColor = "\033[0m";
+    std::string formatted = std::vformat(msg, std::make_format_args(args...));
+    std::cout << redColor << formatted << resetColor << "\n";
+}
  private:
   static std::vector<std::array<sf::Vertex, 2>> lines;
   static std::vector<sf::RectangleShape> rects;

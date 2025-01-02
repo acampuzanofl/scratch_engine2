@@ -47,7 +47,7 @@ std::map<std::string, json> SpriteMap::GetFrames(
     }
   }
   if (sorted.empty()) {
-    Debug::Error("%s was not found in this SpriteMap. And i don't know how to handle errors so i'm just gana close the game :(\n"), animationName);
+    Debug::Error("%s was not found in this SpriteMap. And i don't know how to handle errors so i'm just gana close the game :(\n", animationName);
     exit(EXIT_FAILURE);
   }
   return sorted;

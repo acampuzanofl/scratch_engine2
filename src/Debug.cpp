@@ -23,14 +23,14 @@ void Debug::Draw(Window& window) {
 
   for (auto& l : lines) {
     sf::Vertex line[2] = {l.at(0), l.at(1)};
-    window.Draw(line, 2, sf::Lines);
+    window.Draw(line, 2, sf::PrimitiveType::Lines);
   }
   lines.clear();
 }
 
 void Debug::DrawRect(const sf::FloatRect& rect, sf::Color color) {
-  sf::Vector2f size(rect.width, rect.height);
-  sf::Vector2f pos(rect.left, rect.top);
+  sf::Vector2f size(rect.size);
+  sf::Vector2f pos(rect.position);
   sf::RectangleShape shape(size);
   shape.setPosition(pos);
   shape.setOutlineColor(color);
@@ -42,8 +42,8 @@ void Debug::DrawRect(const sf::FloatRect& rect, sf::Color color) {
 // this method allows you to print rects centered around an origin
 void Debug::DrawRect(const sf::FloatRect& rect, const sf::Vector2f origin,
                      sf::Color color) {
-  sf::Vector2f size(rect.width, rect.height);
-  sf::Vector2f pos(rect.left - origin.x, rect.top - origin.y);
+  sf::Vector2f size(rect.size);
+  sf::Vector2f pos(rect.position.x - origin.x, rect.position.y - origin.y);
   sf::RectangleShape shape(size);
   shape.setPosition(pos);
   shape.setOutlineColor(color);
@@ -54,7 +54,9 @@ void Debug::DrawRect(const sf::FloatRect& rect, const sf::Vector2f origin,
 
 void Debug::DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
                      sf::Color colour) {
-  lines.push_back({sf::Vertex(from, colour), sf::Vertex(to, colour)});
+  lines.push_back({from, colour});
+  lines.push_back({to, colour});
+
 }
 
 void Debug::Log(const std::string& msg) { std::cout << msg << std::endl; }

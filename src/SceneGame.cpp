@@ -107,23 +107,23 @@ void SceneGame::OnCreate() {
 
   // setting defualt keymap for player1
   Input::KeyMap player1map;
-  player1map[Input::Key::Left] = sf::Keyboard::A;
-  player1map[Input::Key::Right] = sf::Keyboard::D;
-  player1map[Input::Key::Up] = sf::Keyboard::W;
-  player1map[Input::Key::Down] = sf::Keyboard::S;
-  player1map[Input::Key::B] = sf::Keyboard::J;
+  player1map[Input::Key::Left] = sf::Keyboard::Key::A;
+  player1map[Input::Key::Right] = sf::Keyboard::Key::D;
+  player1map[Input::Key::Up] = sf::Keyboard::Key::W;
+  player1map[Input::Key::Down] = sf::Keyboard::Key::S;
+  player1map[Input::Key::B] = sf::Keyboard::Key::J;
 
   // debugging events
-  player1map[Input::Key::Zoomin] = sf::Keyboard::Q;
-  player1map[Input::Key::Zoomout] = sf::Keyboard::E;
+  player1map[Input::Key::Zoomin] = sf::Keyboard::Key::Q;
+  player1map[Input::Key::Zoomout] = sf::Keyboard::Key::E;
   input.SubscribeToKeys(player1map);
 
   // setting default keymap for player2
   Input::KeyMap player2map;
-  player2map[Input::Key::Left] = sf::Keyboard::Left;
-  player2map[Input::Key::Right] = sf::Keyboard::Right;
-  player2map[Input::Key::Up] = sf::Keyboard::Up;
-  player2map[Input::Key::Down] = sf::Keyboard::Down;
+  player2map[Input::Key::Left] = sf::Keyboard::Key::Left;
+  player2map[Input::Key::Right] = sf::Keyboard::Key::Right;
+  player2map[Input::Key::Up] = sf::Keyboard::Key::Up;
+  player2map[Input::Key::Down] = sf::Keyboard::Key::Down;
   input2.SubscribeToKeys(player2map);
 
   // add animation component

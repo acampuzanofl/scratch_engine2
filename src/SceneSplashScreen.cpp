@@ -28,19 +28,19 @@ void SceneSplashScreen::OnCreate() {
   // if it was, load the texture and set the sprite
   if (id >= 0) {
     std::shared_ptr<sf::Texture> texture = allocator.Get(id);
-    splashSprite.setTexture(*texture);
+    splashSprite->setTexture(*texture);
   }
 
   // grab the local coordinates of the sprite
-  sf::FloatRect spriteSize = splashSprite.getLocalBounds();
+  sf::FloatRect spriteSize = splashSprite->getLocalBounds();
 
   // set origin of sprite to center of image
-  splashSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
-  splashSprite.setScale(0.8f, 0.8f);
+  splashSprite->setOrigin({spriteSize.size.x * 0.5f, spriteSize.size.y * 0.5f});
+  splashSprite->setScale({0.8f, 0.8f});
 
   // position sprite to center of screen
   sf::Vector2f windowCenter = window.GetCenter();
-  splashSprite.setPosition(windowCenter.x, windowCenter.y);
+  splashSprite->setPosition({windowCenter.x, windowCenter.y});
 }
 
 void SceneSplashScreen::OnActivate() { currentSeconds = 0.f; }
@@ -57,4 +57,4 @@ void SceneSplashScreen::Update(float deltaTime) {
   }
 }
 
-void SceneSplashScreen::Draw(Window& window) { window.Draw(splashSprite); }
+void SceneSplashScreen::Draw(Window& window) { window.Draw(*splashSprite); }
