@@ -69,7 +69,14 @@ void CSprite::Load(const std::string &textureFilePath,
   if (owner->context->spriteMapAllocator) {
     int spritemapid =
         owner->context->spriteMapAllocator->Add(spriteMapFilePath);
-    if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
+
+    /**
+     * TODO:
+     * There is a bug where the return value of Add is not guarenteed, there is a small chance
+     * that on a succesful add spritemapid can still be -1, which will result in a segfault due to currentSpriteMapid returning Null.
+     * The fix is to set a default value for currentId in the resource allocator template
+     */
+    if (spritemapid != -1 && spritemapid != currentSpriteMapid) {
       currentSpriteMapid = spritemapid;
     }
   } else {
