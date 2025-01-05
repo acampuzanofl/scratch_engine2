@@ -12,6 +12,8 @@
 
 #include "Window.hpp"
 
+#define ERROR(format, ...) Debug::Error(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+
 class Debug {
  public:
   static void Draw(Window& window);
@@ -32,16 +34,22 @@ class Debug {
     std::printf((msg + "\n").c_str(), args...);
   }
 
-template <typename... Args>
-static void Error(const std::string& msg, Args... args) {
-    const std::string redColor = "\033[31m";
-    const std::string resetColor = "\033[0m";
-    std::string formatted = std::vformat(msg, std::make_format_args(args...));
-    std::cout << redColor << formatted << resetColor << "\n";
-}
+    template <typename... Args>
+    static void Error(const std::string& file, int line, const std::string& function, const std::string& formatStr, Args&&... args) {
+        const std::string redColor = "\033[31m";
+        const std::string resetColor = "\033[0m";
+
+        // Format the message
+        std::string formattedMessage = std::vformat(formatStr, std::make_format_args(std::forward<Args>(args)...));
+
+        // Print the error with file and line information
+        std::cerr << redColor << "[ERROR] " << file << ":" << line << ": " << function << "() "
+                  << formattedMessage << resetColor << std::endl;
+    }
  private:
   static std::vector<std::array<sf::Vertex, 2>> lines;
   static std::vector<sf::RectangleShape> rects;
 };
+
 
 #endif
