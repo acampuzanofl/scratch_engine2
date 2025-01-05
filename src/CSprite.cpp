@@ -25,7 +25,8 @@ void CSprite::Load(int textureid) {
     currentTextureId = textureid;
     std::shared_ptr<sf::Texture> texture =
         owner->context->textureAllocator->Get(textureid);
-    sprite->setTexture(*texture);
+      sf::Sprite pSprite(*texture);
+      sprite = pSprite;  
   }
 }
 
@@ -34,7 +35,8 @@ void CSprite::Load(int textureid, int spritemapid) {
     currentTextureId = textureid;
     std::shared_ptr<sf::Texture> texture =
         owner->context->textureAllocator->Get(textureid);
-    sprite->setTexture(*texture);
+      sf::Sprite pSprite(*texture);
+      sprite = pSprite;  
   }
   if (spritemapid >= 0 && spritemapid != currentSpriteMapid) {
     currentSpriteMapid = spritemapid;
@@ -48,7 +50,8 @@ void CSprite::Load(const std::string &textureFilePath) {
       currentTextureId = textureID;
       std::shared_ptr<sf::Texture> texture =
           owner->context->textureAllocator->Get(textureID);
-      sprite->setTexture(*texture);
+      sf::Sprite pSprite(*texture);
+      sprite = pSprite;  
     }
   }
 }
@@ -61,7 +64,8 @@ void CSprite::Load(const std::string &textureFilePath,
       currentTextureId = textureID;
       std::shared_ptr<sf::Texture> texture =
           owner->context->textureAllocator->Get(textureID);
-      sprite->setTexture(*texture);
+      sf::Sprite pSprite(*texture);
+      sprite = pSprite;   
     }
   } else {
     std::cout << "\033[91mtexture allocator not set\n\033[0m";
@@ -104,12 +108,12 @@ void CSprite::LateUpdate(float /*deltaTime*/) {
   // Debug::DrawRect(boundingRect, sf::Color::Green);
 }
 
-void CSprite::Draw(Window &window) { 
+void CSprite::Draw(Window &window) {
         if (sprite) {
   window.Draw(*sprite);
     } else {
-        Debug::Error("CSprite::GetSprite() return empty sprite.");
-        exit(EXIT_FAILURE); // Return a default-constructed sprite
+      ERROR("sprite is NULL");
+      exit(EXIT_FAILURE); // Return a default-constructed sprite
     }
  }
 
@@ -137,7 +141,7 @@ sf::Sprite CSprite::GetSprite() const {
       if (sprite) {
         return *sprite; // Return the stored sprite
     } else {
-        Debug::Error("CSprite::GetSprite() return empty sprite.");
+        ERROR("sprite is NULL");
         exit(EXIT_FAILURE); // Return a default-constructed sprite
     }
 }

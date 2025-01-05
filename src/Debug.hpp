@@ -13,6 +13,8 @@
 #include "Window.hpp"
 
 #define ERROR(format, ...) Debug::Error(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+#define DEBUG(format, ...) Debug::Log(format, ##__VA_ARGS__)
+
 
 class Debug {
  public:
@@ -31,7 +33,9 @@ class Debug {
   // we use this template to allow us to make a wrapper for printf
   template <typename... Args>
   static void Log(const std::string& msg, Args... args) {
-    std::printf((msg + "\n").c_str(), args...);
+    const std::string logColor = "\033[38;5;210m";
+    const std::string resetColor = "\033[0m";
+    std::printf(( logColor + "[DEBUG] " + msg + "\n" + resetColor).c_str(), args...);
   }
 
     template <typename... Args>

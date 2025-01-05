@@ -59,6 +59,12 @@ void SceneGame::OnCreate() {
   * missing initializers
   */
 
+ /**
+  * TODO:
+  * having 2 different contexts seems like a bad way of doing this
+  * should find and alternative that allows me to use context
+  */
+
   context2.input = &input2;
   context2.objects = &objects;
   context2.workingDir = &assetsDir;
@@ -205,8 +211,8 @@ void SceneGame::ProcessInput() {
    *  inputs only if theres objects that are looking for inputs
    */
 
-  input.PollKey();
-  input2.PollKey();
+  // input.PollKey();
+  // input2.PollKey();
 }
 void SceneGame::LateUpdate(float deltaTime) { objects.LateUpdate(deltaTime); }
 void SceneGame::Update(float deltaTime) {

@@ -58,5 +58,3 @@ void Debug::DrawLine(const sf::Vector2f& from, const sf::Vector2f& to,
   lines.push_back({to, colour});
 
 }
-
-void Debug::Log(const std::string& msg) { std::cout << msg << std::endl; }

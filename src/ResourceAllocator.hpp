@@ -19,7 +19,7 @@ class ResourceAllocator {
 
     std::shared_ptr<T> resource = std::make_shared<T>();
     if (!resource->loadFromFile(filePath)) {
-      Debug::Error("load failed: %s\n", filePath);
+      ERROR("load failed: %s\n", filePath);
       return -1;
     }
 

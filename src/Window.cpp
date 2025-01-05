@@ -29,7 +29,9 @@ void Window::Update() {
 
 void Window::BeginDraw() { window.clear(sf::Color::White); }
 
-void Window::Draw(const sf::Drawable& drawable) { window.draw(drawable); }
+void Window::Draw(const sf::Drawable& drawable) { 
+  window.draw(drawable); 
+  }
 
 void Window::Draw(const sf::Vertex* vertices, std::size_t vertexCount,
                   sf::PrimitiveType type) {
