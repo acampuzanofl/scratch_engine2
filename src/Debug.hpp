@@ -35,7 +35,7 @@ class Debug {
   static void Log(const std::string& msg, Args... args) {
     const std::string logColor = "\033[38;5;210m";
     const std::string resetColor = "\033[0m";
-    std::printf(( logColor + "[DEBUG] " + msg + "\n" + resetColor).c_str(), args...);
+    std::printf(( logColor + "[DEBUG] " + msg + resetColor + "\n" ).c_str(), args...);
   }
 
     template <typename... Args>

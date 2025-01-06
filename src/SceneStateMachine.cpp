@@ -29,6 +29,12 @@ void SceneStateMachine::Draw(Window& window) {
 }
 
 unsigned int SceneStateMachine::Add(std::shared_ptr<Scene> scene) {
+  /**
+   * TODO:
+   * Adding is not the same as Creating, The OnCreate should be reserved for instantiantiate intent
+   * Adding is just placing a resource into the pool not creating it.
+   */
+
   auto inserted = scenes.insert(std::make_pair(currentSceneID, scene));
   currentSceneID++;
   inserted.first->second->OnCreate();

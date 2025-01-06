@@ -22,9 +22,14 @@ void Window::Update() {
       window.close();
   };
 
-  while (window.isOpen()) {
-    window.handleEvents(onClose);
-  }
+  const auto onKey = [this](const sf::Event::KeyPressed& key)
+  {
+    if( key.scancode == sf::Keyboard::Scancode::Escape){
+      window.close();
+    }
+  };
+
+  window.handleEvents(onClose, onKey);
 }
 
 void Window::BeginDraw() { window.clear(sf::Color::White); }
