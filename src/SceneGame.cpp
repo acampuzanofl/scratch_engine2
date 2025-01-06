@@ -211,8 +211,8 @@ void SceneGame::ProcessInput() {
    *  inputs only if theres objects that are looking for inputs
    */
 
-  // input.PollKey();
-  // input2.PollKey();
+  input.PollKey();
+  input2.PollKey();
 }
 void SceneGame::LateUpdate(float deltaTime) { objects.LateUpdate(deltaTime); }
 void SceneGame::Update(float deltaTime) {
