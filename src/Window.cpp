@@ -1,7 +1,7 @@
 #include "Window.hpp"
 
 Window::Window(const std::string& windowName)
-    : window(sf::VideoMode({800, 600}), windowName, sf::Style::Titlebar) {
+    : window(sf::VideoMode({800, 600}), windowName, sf::Style::Default) {
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(60);
 
