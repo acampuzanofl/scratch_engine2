@@ -18,6 +18,14 @@ void CVelocity::Update(float deltatime) {
 }
 
 void CVelocity::Set(const sf::Vector2f& vel) {
+  /**
+   * TODO:
+   * The velcoty component should not be directly modifying the velocity
+   * stored in transform. There should be a system where transform and velcity can exist
+   * seperatly where velocity effects positions with transform not needing to know
+   * what velocity is as the velocity comononent should keep track of that
+   */
+  owner->transform->SetVelocity(vel);
   velocity = vel;
   ClampVelocity();
 }

@@ -42,8 +42,8 @@ void CKeyboardMovement::Update(float deltaTime) {
 
   // Update movement
   if (owner->context->input->IsKeyPressed(Input::Key::Left)) {
-    velocity->Set(sf::Vector2f(-200, 0));
+    velocity->Set(-200, 0);
   } else if (owner->context->input->IsKeyPressed(Input::Key::Right)) {
-    velocity->Set(sf::Vector2f(200, 0));
+    velocity->Set(200, 0);
   }
 }
