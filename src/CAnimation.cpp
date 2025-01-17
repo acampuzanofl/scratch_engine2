@@ -16,6 +16,7 @@ CAnimation::CAnimation(Object *owner)
 
 void CAnimation::Awake() {
   sprite = owner->GetComponent<CSprite>();
+  direction = owner->GetComponent<CDirection>();
   // make sure theres an animation
   // if there is an animation, initialize the first frame of animation on awake
   if (currentAnimation.first != AnimationState::None) {
@@ -24,6 +25,7 @@ void CAnimation::Awake() {
 }
 
 void CAnimation::Update(float deltaTime) {
+  SetAnimationDirection(direction->Get());
   if (currentAnimation.first != AnimationState::None) {
     bool newFrame = currentAnimation.second->Update(deltaTime);
     if (newFrame) {
@@ -51,6 +53,11 @@ void CAnimation::SetAnimationState(AnimationState state) {
     currentAnimation.second->Reset();
   }
 }
+
+void CAnimation::SetAnimationDirection(FacingDirection facing){
+    direction->Set(facing);
+}
+
 
 const AnimationState &CAnimation::GetCurrentAnimationState() const {
   return currentAnimation.first;

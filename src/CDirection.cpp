@@ -25,3 +25,7 @@ FacingDirection CDirection::Get() {
   }
   return currentDir;
 }
+
+void CDirection::Set(FacingDirection direction){
+  currentDir = direction;
+}

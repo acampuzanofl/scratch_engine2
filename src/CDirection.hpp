@@ -14,6 +14,8 @@ class CDirection : public Component {
   void Awake() override;
 
   FacingDirection Get();
+  void Set(FacingDirection direction);
+
 
  private:
   std::shared_ptr<CVelocity> velocity;
