@@ -12,7 +12,7 @@
 
 // CAnimation Is responsible for setting and updating animation for the owner
 // The owner must have a CSprite
-enum class AnimationState { None, Idle, Walk, A, B, C, D, Projectile };
+enum class AnimationState { None, Idle, Walk, A, B, C, D, ProjectileLoop, ProjectileEnd };
 
 class CAnimation : public Component {
  public:

@@ -6,6 +6,7 @@
 #include "Input.hpp"
 #include "ObjectCollection.hpp"
 #include "WorkingDirectory.hpp"
+#include "CDirection.hpp"
 
 class CProjectileAttack : public Component {
  public:
@@ -17,7 +18,8 @@ class CProjectileAttack : public Component {
 
  private:
   void SpawnProjectile();
-
+static std::unordered_map<FacingDirection, sf::IntRect> textureDirectionBindings;
+  std::shared_ptr<CDirection> direction;
   std::shared_ptr<CAnimation> animation;
   int projectileTextureID;
 };

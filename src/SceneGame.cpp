@@ -101,8 +101,8 @@ void SceneGame::OnCreate() {
 
   // add texture and sprite map using Load
   sprite2->Load(
-      assetsDir.Get() + "characters/Mash/MashSpriteSheet/MashSpriteSheet.png",
-      assetsDir.Get() + "characters/Mash/MashSpritesheet/MashSpriteSheet.json");
+      assetsDir.Get() + "characters/Hyde/HydeSpriteSheet/HydeSpriteSheet.png",
+      assetsDir.Get() + "characters/Hyde/HydeSpritesheet/HydeSpriteSheet.json");
 
   // add keyboard component for player
   auto movement = player->AddComponent<CKeyboardMovement>();
@@ -110,6 +110,8 @@ void SceneGame::OnCreate() {
 
   // add keyboard component for player
   auto movement2 = player2->AddComponent<CKeyboardMovement>();
+  auto attack2 = player2->AddComponent<CKeyboardAttack>();
+
 
   // setting defualt keymap for player1
   Input::KeyMap player1map;
@@ -130,6 +132,7 @@ void SceneGame::OnCreate() {
   player2map[Input::Key::Right] = sf::Keyboard::Key::Right;
   player2map[Input::Key::Up] = sf::Keyboard::Key::Up;
   player2map[Input::Key::Down] = sf::Keyboard::Key::Down;
+  player2map[Input::Key::B] = sf::Keyboard::Key::RShift;
   input2.SubscribeToKeys(player2map);
 
   // add animation component
@@ -147,8 +150,10 @@ void SceneGame::OnCreate() {
       sprite->CreateAnimationFromSpriteMap("WagnerB", .05f);
 
   // create an animation using the sprite map and sprite sheet
-  std::shared_ptr<Animation> mashidleAnimation =
-      sprite2->CreateAnimationFromSpriteMap("MashIdle", .1f);
+  std::shared_ptr<Animation> hydeidleAnimation =
+      sprite2->CreateAnimationFromSpriteMap("HydeIdle", .1f, true);
+  std::shared_ptr<Animation> hydefireballAnimation =
+      sprite2->CreateAnimationFromSpriteMap("HydeFireball", .05f);
 
   // add the created animation to the animation component
   animation->AddAnimation(AnimationState::Idle, idleAnimation);
@@ -156,7 +161,13 @@ void SceneGame::OnCreate() {
   animation->AddAnimation(AnimationState::B, BAnimation);
 
   // add the created animation to the animation component
-  animation2->AddAnimation(AnimationState::Idle, mashidleAnimation);
+  /**
+   * TODO:
+   * Adding animation state D causes a bus error
+   */
+  animation2->AddAnimation(AnimationState::Idle, hydeidleAnimation);
+  animation2->AddAnimation(AnimationState::B, hydefireballAnimation);
+
 
   // add collider component
   auto collider = player->AddComponent<CBoxCollider>();
@@ -194,6 +205,27 @@ void SceneGame::OnCreate() {
   auto movementanim = player->AddComponent<CMovementAnimation>();
   auto movementanim2 = player2->AddComponent<CMovementAnimation>();
 
+  // create fireball object
+  std::shared_ptr<Object> fireball = std::make_shared<Object>(&context2);
+  auto fireballsprite = fireball->AddComponent<CSprite>();
+  fireballsprite->SetDrawLayer(DrawLayer::Entities);
+  fireballsprite->Load(
+      assetsDir.Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
+      assetsDir.Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.json");
+  auto fireballanimation = fireball->AddComponent<CAnimation>();
+  std::shared_ptr<Animation> fireballLoop =
+      fireballsprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
+  std::shared_ptr<Animation> fireballEnd =
+      fireballsprite->CreateAnimationFromSpriteMap("FireballEnd", .05f, true);
+  fireballanimation->AddAnimation(AnimationState::ProjectileLoop, fireballLoop);
+  fireballanimation->AddAnimation(AnimationState::ProjectileEnd, fireballEnd);
+  auto fireballcollider = fireball->AddComponent<CBoxCollider>();
+  fireballcollider->SetSize(50, 25);
+  fireballcollider->SetLayer(CollisionLayer::Player);
+  auto fireballvelocity = fireball->AddComponent<CVelocity>();
+  auto fireballdirection = fireball->AddComponent<CDirection>();
+  auto fireballmovementanim = fireball->AddComponent<CMovementAnimation>();
+  objects.Add(fireball);
 
   // add player object to the ObjectCollector
   objects.Add(player);
