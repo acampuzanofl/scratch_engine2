@@ -19,6 +19,9 @@ class CProjectileAttack : public Component {
   void SpawnProjectile();
   std::shared_ptr<CDirection> direction;
   std::shared_ptr<CAnimation> animation;
+  std::shared_ptr<Object> projectile;
+  float lifeTime;
+  float currenTime;
 };
 
 #endif /* CProjectileAttack_hpp */

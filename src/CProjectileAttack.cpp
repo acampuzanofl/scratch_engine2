@@ -15,11 +15,26 @@ void CProjectileAttack::Start() {
 }
 
 void CProjectileAttack::Update(float deltaTime) {
-  // animation->SetAnimationState(AnimationState::ProjectileLoop);
+
+  /**
+   * TODO: temporary hot fix to prevent a busy update loop. Exit early if lifeTime has not been set
+   */
+  if( lifeTime == 0.f){
+    return;
+  } else if (currenTime > lifeTime)
+  {
+    lifeTime = 0.f;
+    currenTime = 0.f;
+    projectile->QueueForRemoval();
+  }else{
+  currenTime += deltaTime;}
 }
 
+/**
+ * TODO: huge lag spike when spawn projectile is first called. Thise sprites should have been loader sooner and not when projectile is first spawned
+ */
 void CProjectileAttack::SpawnProjectile() {
-  std::shared_ptr<Object> projectile = std::make_shared<Object>(owner->context);
+  projectile = std::make_shared<Object>(owner->context);
   auto sprite = projectile->AddComponent<CSprite>();
     sprite->Load(
       owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
@@ -44,5 +59,10 @@ void CProjectileAttack::SpawnProjectile() {
   // fireballcollider->SetSize(50, 25);
   // fireballcollider->SetLayer(CollisionLayer::Player);
 
+  /**
+   * TODO: i dont think this lifetime varaible makes a lot of sense. It seems like a very hacky solution to what im trying to do. Also Update and awake
+   * running all the time before i haave "spawned" the projectile seems wrong as well
+   */
+  lifeTime = 1.f;
   owner->context->objects->Add(projectile);
 }
