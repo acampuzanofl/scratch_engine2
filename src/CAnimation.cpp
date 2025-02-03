@@ -17,6 +17,11 @@ CAnimation::CAnimation(Object *owner)
 void CAnimation::Awake() {
   sprite = owner->GetComponent<CSprite>();
   direction = owner->GetComponent<CDirection>();
+
+  // TODO: CAnimation being dependent on owner having a CDirection doesnt make sense to me? I'm not sure, will have to think about it. Also need to assert all componenent dependencies 
+  assert(direction != nullptr);
+  assert(sprite != nullptr);
+  
   // make sure theres an animation
   // if there is an animation, initialize the first frame of animation on awake
   if (currentAnimation.first != AnimationState::None) {

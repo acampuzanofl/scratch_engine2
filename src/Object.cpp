@@ -24,7 +24,7 @@ void Object::Awake() {
 
 void Object::Start() {
   for (int i = components.size() - 1; i >= 0; i--) {
-    components[i]->Awake();
+    components[i]->Start();
   }
 }
 

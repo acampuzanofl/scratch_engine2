@@ -26,6 +26,7 @@
 #include "Window.hpp"
 #include "WorkingDirectory.hpp"
 #include "CDirection.hpp"
+#include "CProjectileAttack.hpp"
 
 SceneGame::SceneGame(WorkingDirectory &workingDir,
                      ResourceAllocator<sf::Texture> &textureAllocator,
@@ -37,6 +38,13 @@ SceneGame::SceneGame(WorkingDirectory &workingDir,
       window(window) {}
 
 void SceneGame::OnCreate() {
+
+
+  // Zoom out at start to help see both characters, should be handled by automatically, this is a hot fix.
+  sf::View view = window.GetView();
+  view.zoom(1.5);
+  window.SetView(view);
+
   /**
    * TODO
    * make an allocator for the input so that the scene
@@ -205,27 +213,8 @@ void SceneGame::OnCreate() {
   auto movementanim = player->AddComponent<CMovementAnimation>();
   auto movementanim2 = player2->AddComponent<CMovementAnimation>();
 
-  // create fireball object
-  std::shared_ptr<Object> fireball = std::make_shared<Object>(&context2);
-  auto fireballsprite = fireball->AddComponent<CSprite>();
-  fireballsprite->SetDrawLayer(DrawLayer::Entities);
-  fireballsprite->Load(
-      assetsDir.Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
-      assetsDir.Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.json");
-  auto fireballanimation = fireball->AddComponent<CAnimation>();
-  std::shared_ptr<Animation> fireballLoop =
-      fireballsprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
-  std::shared_ptr<Animation> fireballEnd =
-      fireballsprite->CreateAnimationFromSpriteMap("FireballEnd", .05f, true);
-  fireballanimation->AddAnimation(AnimationState::ProjectileLoop, fireballLoop);
-  fireballanimation->AddAnimation(AnimationState::ProjectileEnd, fireballEnd);
-  auto fireballcollider = fireball->AddComponent<CBoxCollider>();
-  fireballcollider->SetSize(50, 25);
-  fireballcollider->SetLayer(CollisionLayer::Player);
-  auto fireballvelocity = fireball->AddComponent<CVelocity>();
-  auto fireballdirection = fireball->AddComponent<CDirection>();
-  auto fireballmovementanim = fireball->AddComponent<CMovementAnimation>();
-  objects.Add(fireball);
+  // give player2 a projectile
+  auto hydefireball = player2->AddComponent<CProjectileAttack>();
 
   // add player object to the ObjectCollector
   objects.Add(player);

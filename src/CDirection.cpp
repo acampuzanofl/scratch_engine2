@@ -5,7 +5,8 @@
 CDirection::CDirection(Object* owner)
     : Component(owner), currentDir(FacingDirection::None) {}
 
-void CDirection::Awake() { velocity = owner->GetComponent<CVelocity>(); }
+void CDirection::Awake() { velocity = owner->GetComponent<CVelocity>();
+assert(velocity != nullptr); }
 
 FacingDirection CDirection::Get() {
   const sf::Vector2f& currentVel = velocity->Get();

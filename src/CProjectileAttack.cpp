@@ -3,45 +3,46 @@
 #include "Object.hpp"
 
 CProjectileAttack::CProjectileAttack(Object* owner) : Component(owner) {}
-std::unordered_map<FacingDirection, sf::IntRect> CProjectileAttack::textureDirectionBindings = {};
-
-void CProjectileAttack::Awake() {
-  animation = owner->GetComponent<CAnimation>();
-  direction = owner->GetComponent<CDirection>();
-
-}
 
 void CProjectileAttack::Start() {
-  projectileTextureID = owner->context->textureAllocator->Add(
-      owner->context->workingDir->Get() + "LPC/Weapons/arrow.png");
-  textureDirectionBindings.emplace(FacingDirection::Left, sf::IntRect({64, 0}, {64, 64}));
-  textureDirectionBindings.emplace(FacingDirection::Right, sf::IntRect({192, 0}, {64, 64}));
+  direction = owner->GetComponent<CDirection>();
+  auto animation = owner->GetComponent<CAnimation>();
+  auto battack = animation->GetAnimationByState(AnimationState::B);
+  battack->AddFrameCallback(4, [this]() {
+    SpawnProjectile();
+    printf("fireball\n");
+  });
 }
 
 void CProjectileAttack::Update(float deltaTime) {
-  if (owner->context->input->IsKeyDown(Input::Key::D)) {
-    SpawnProjectile();
-    animation->SetAnimationState(AnimationState::ProjectileLoop);
-  } else if (owner->context->input->IsKeyUp(Input::Key::D)) {
-    animation->SetAnimationState(AnimationState::Idle);
-  }
+  // animation->SetAnimationState(AnimationState::ProjectileLoop);
 }
 
 void CProjectileAttack::SpawnProjectile() {
   std::shared_ptr<Object> projectile = std::make_shared<Object>(owner->context);
-
+  auto sprite = projectile->AddComponent<CSprite>();
+    sprite->Load(
+      owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
+      owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.json");
   projectile->transform->SetPosition(owner->transform->GetPosition());
 
+  projectile->AddComponent<CDirection>();
+  projectile->AddComponent<CVelocity>();
+ auto animation = projectile->AddComponent<CAnimation>();
+  std::shared_ptr<Animation> fireballLoop =
+      sprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
+  std::shared_ptr<Animation> fireballEnd =
+      sprite->CreateAnimationFromSpriteMap("FireballEnd", .05f, true);
+  animation->AddAnimation(AnimationState::ProjectileLoop, fireballLoop);
+  animation->AddAnimation(AnimationState::ProjectileEnd, fireballEnd);
+  animation->SetAnimationState(AnimationState::ProjectileLoop);
+
 	// Get the current facing direction.
-  FacingDirection currentDir = direction->Get();
+  // FacingDirection currentDir = direction->Get();
 
-  auto projSprite = projectile->AddComponent<CSprite>();
-  projSprite->Load(projectileTextureID);
-  projSprite->SetDrawLayer(DrawLayer::Entities);
-  projSprite->SetSortOrder(100);
-
-	// Use the direction to set the texture rect.
-    projSprite->SetTextureRect(textureDirectionBindings.at(direction->Get()));
+  // auto fireballcollider = projectile->AddComponent<CBoxCollider>();
+  // fireballcollider->SetSize(50, 25);
+  // fireballcollider->SetLayer(CollisionLayer::Player);
 
   owner->context->objects->Add(projectile);
 }
