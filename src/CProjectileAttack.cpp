@@ -72,9 +72,10 @@ void CProjectileAttack::SpawnProjectile() {
 	// Get the current facing direction.
   // FacingDirection currentDir = direction->Get();
 
-  // auto fireballcollider = projectile->AddComponent<CBoxCollider>();
-  // fireballcollider->SetSize(50, 25);
-  // fireballcollider->SetLayer(CollisionLayer::Player);
+  auto fireballcollider = projectile->AddComponent<CBoxCollider>();
+  fireballcollider->SetOffset({30,50});
+  fireballcollider->SetSize(50, 25);
+  fireballcollider->SetLayer(CollisionLayer::Player);
 
   /**
    * TODO: i dont think this lifetime varaible makes a lot of sense. It seems like a very hacky solution to what im trying to do. Also Update and awake
