@@ -5,9 +5,28 @@
 CProjectileAttack::CProjectileAttack(Object* owner) : Component(owner) {}
 
 void CProjectileAttack::Start() {
+  projectile = std::make_shared<Object>(owner->context);
+
   direction = owner->GetComponent<CDirection>();
-  auto animation = owner->GetComponent<CAnimation>();
-  auto battack = animation->GetAnimationByState(AnimationState::B);
+
+  auto sprite = projectile->AddComponent<CSprite>();
+    sprite->Load(
+      owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
+      owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.json");
+  projectile->transform->SetPosition(owner->transform->GetPosition());
+
+  projectile->AddComponent<CDirection>();
+  projectile->AddComponent<CVelocity>();
+  animation = projectile->AddComponent<CAnimation>();
+  std::shared_ptr<Animation> fireballLoop =
+      sprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
+  std::shared_ptr<Animation> fireballEnd =
+      sprite->CreateAnimationFromSpriteMap("FireballEnd", .05f, true);
+  animation->AddAnimation(AnimationState::ProjectileLoop, fireballLoop);
+  animation->AddAnimation(AnimationState::ProjectileEnd, fireballEnd);
+
+  auto owneranimation = owner->GetComponent<CAnimation>();
+  auto battack = owneranimation->GetAnimationByState(AnimationState::B);
   battack->AddFrameCallback(4, [this]() {
     SpawnProjectile();
     printf("fireball\n");
@@ -30,11 +49,9 @@ void CProjectileAttack::Update(float deltaTime) {
   currenTime += deltaTime;}
 }
 
-/**
- * TODO: huge lag spike when spawn projectile is first called. Thise sprites should have been loader sooner and not when projectile is first spawned
- */
 void CProjectileAttack::SpawnProjectile() {
   projectile = std::make_shared<Object>(owner->context);
+
   auto sprite = projectile->AddComponent<CSprite>();
     sprite->Load(
       owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
@@ -43,7 +60,7 @@ void CProjectileAttack::SpawnProjectile() {
 
   projectile->AddComponent<CDirection>();
   projectile->AddComponent<CVelocity>();
- auto animation = projectile->AddComponent<CAnimation>();
+  animation = projectile->AddComponent<CAnimation>();
   std::shared_ptr<Animation> fireballLoop =
       sprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
   std::shared_ptr<Animation> fireballEnd =
