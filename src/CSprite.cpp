@@ -62,6 +62,7 @@ void CSprite::Load(const std::string &textureFilePath,
     int textureID = owner->context->textureAllocator->Add(textureFilePath);
     if (textureID >= 0 && textureID != currentTextureId) {
       currentTextureId = textureID;
+
       std::shared_ptr<sf::Texture> texture =
           owner->context->textureAllocator->Get(textureID);
       sf::Sprite pSprite(*texture);
@@ -89,9 +90,18 @@ void CSprite::Load(const std::string &textureFilePath,
 }
 
 void CSprite::LateUpdate(float /*deltaTime*/) {
+  
+  auto currentAnimation = owner->GetComponent<CAnimation>();
+  if (currentAnimation == nullptr){
+    return;
+  }
+  
+  /** TODO:
+   * CSprite assumes that it has a CAnimation and SpriteMap data, but theres no guanretee that
+   * the csprite actually will have this. Checking if it exist for now. But there should be a clearer
+   * seperation of Canimtion and spritemap data inside of a csprite.
+   */
   sf::Vector2f pos = owner->transform->GetPosition();
-  std::shared_ptr<CAnimation> currentAnimation =
-      owner->GetComponent<CAnimation>();
   const SpriteMapData *currentFrame =
       currentAnimation->GetCurrentAnimation()->GetCurrentFrame();
   pos.x += currentFrame->sourceSizex;
@@ -113,7 +123,7 @@ void CSprite::Draw(Window &window) {
   window.Draw(*sprite);
     } else {
       ERROR("sprite is NULL");
-      exit(EXIT_FAILURE); // Return a default-constructed sprite
+      exit(EXIT_FAILURE);
     }
  }
 
