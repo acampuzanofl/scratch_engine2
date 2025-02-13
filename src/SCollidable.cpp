@@ -53,10 +53,17 @@ void SCollidable::Update() {
    *  implementation. TODO: implement the easier one of the too, dynamic or add
    *  it here
    */
-  Resolve();
+  ResolveCollisions();
 }
 
-void SCollidable::Resolve() {
+void SCollidable::LateUpdate(){
+  /**
+   * This is where we should resolve colisions. Update should be reserved for determing what has colided. That way we can resolve all the collisions at once and prevent
+   * cases where the order of the object in the collision array effects the order of the resolution
+   */
+}
+
+void SCollidable::ResolveCollisions() {
   for (const auto& maps : collidables) {
     /**
      *  check what the layer collides with
@@ -122,16 +129,14 @@ void SCollidable::Resolve() {
              * the collidables list last whos overlap gets resolved. TODO: find
              * a way to resolve collisions between to objects simulaneuosly.
              */
-            if (collision->GetOwner()->transform->GetVelocity().x != 0) {
               collidable->ResolveOverlap(m);
-            } else {
               /**
                * TODO: im not sure if
                * different types of collisions need to be resolved based on
                * what type of layer is colliding. Maybe a switch case? or
                * callbacks? to enable handling collisions from different layers
                */
-            }
+            
           }
         }
       }

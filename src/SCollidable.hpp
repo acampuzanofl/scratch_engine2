@@ -16,13 +16,12 @@ class SCollidable {
   void Add(std::vector<std::shared_ptr<Object>>& objects);
   void ProcessRemovals();
   void Update();
+  void LateUpdate();
 
  private:
-  void Resolve();
-  void ProcessCollisions(std::vector<std::shared_ptr<Object>>& first,
-                         std::vector<std::shared_ptr<Object>>& second);
-  std::map<CollisionLayer, std::vector<std::shared_ptr<CBoxCollider>>>
-      collidables;
+  void ResolveCollisions();
+  void DetectCollisions();
+  std::map<CollisionLayer, std::vector<std::shared_ptr<CBoxCollider>>> collidables;
 };
 
 #endif
