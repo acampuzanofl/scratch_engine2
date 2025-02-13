@@ -13,7 +13,7 @@
 #include "Window.hpp"
 
 #define ERROR(format, ...) Debug::Error(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
-#define DEBUG(format, ...) Debug::Log(__FILE__, __LINE__, __FUNCTION__, format, ##__VA_ARGS__)
+#define DEBUG(format, ...) Debug::Log(format, ##__VA_ARGS__)
 
 
 class Debug {
