@@ -27,9 +27,8 @@ void CProjectileAttack::Start() {
 
   auto owneranimation = owner->GetComponent<CAnimation>();
   auto battack = owneranimation->GetAnimationByState(AnimationState::B);
-  battack->AddFrameCallback(4, [this]() {
+  battack->AddFrameCallback(3, [this]() {
     SpawnProjectile();
-    printf("fireball\n");
   });
 }
 
@@ -59,8 +58,22 @@ void CProjectileAttack::SpawnProjectile() {
   projectile->transform->SetPosition(owner->transform->GetPosition());
 
   projectile->AddComponent<CDirection>();
-  projectile->AddComponent<CVelocity>();
   animation = projectile->AddComponent<CAnimation>();
+  
+
+  auto velocity = projectile->AddComponent<CVelocity>();
+  velocity->Set({300,0});
+  velocity->SetWeight(1);
+
+	// Get the current facing direction.
+  FacingDirection currentDir = direction->Get();
+  if (currentDir == FacingDirection::Left){
+    projectile->transform->AddX(-150);
+  }else if (currentDir == FacingDirection::Right)
+  {
+        projectile->transform->AddX(150);
+  }
+  
   std::shared_ptr<Animation> fireballLoop =
       sprite->CreateAnimationFromSpriteMap("FireballLoop", .05f, true);
   std::shared_ptr<Animation> fireballEnd =
@@ -68,9 +81,6 @@ void CProjectileAttack::SpawnProjectile() {
   animation->AddAnimation(AnimationState::ProjectileLoop, fireballLoop);
   animation->AddAnimation(AnimationState::ProjectileEnd, fireballEnd);
   animation->SetAnimationState(AnimationState::ProjectileLoop);
-
-	// Get the current facing direction.
-  // FacingDirection currentDir = direction->Get();
 
   auto fireballcollider = projectile->AddComponent<CBoxCollider>();
   fireballcollider->SetOffset({30,50});
