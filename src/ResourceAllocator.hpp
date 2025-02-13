@@ -55,7 +55,7 @@ class ResourceAllocator {
   bool Has(int id) { return (Get(id) != nullptr); }
 
  private:
-  int currentId;
+  int currentId = 0;
   std::map<std::string, std::pair<int, std::shared_ptr<T>>> resources;
 };
 
