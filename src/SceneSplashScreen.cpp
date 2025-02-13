@@ -7,40 +7,41 @@
 
 #include "SceneStateMachine.hpp"
 #include "WorkingDirectory.hpp"
+#include "CSprite.hpp"
 
 SceneSplashScreen::SceneSplashScreen(WorkingDirectory& workingDirectory,
                                      SceneStateMachine& sceneStateMachine,
                                      Window& window,
                                      ResourceAllocator<sf::Texture>& allocator)
-    : workingDirectory(workingDirectory),
+    : assetsDir(workingDirectory),
       sceneStateMachine(sceneStateMachine),
       window(window),
       showForSeconds(0.f),
       currentSeconds(0.f),
       switchToState(0),
-      allocator(allocator){};
+      textureAllocator(allocator){};
 
 void SceneSplashScreen::OnCreate() {
+
+  context.input = nullptr;
+  context.objects = &objects;
+  context.workingDir = &assetsDir;
+  context.textureAllocator = &textureAllocator;
+  context.spriteMapAllocator = nullptr;
+  context.window = &window;
+
+  auto background = std::make_shared<Object>(&context);
+
   // add the texture to the allocator
-  int id = allocator.Add(workingDirectory.Get() + "splash/splash.png");
-
-  // check if texture was succesfully added
-  // if it was, load the texture and set the sprite
-  if (id >= 0) {
-    std::shared_ptr<sf::Texture> texture = allocator.Get(id);
-    splashSprite->setTexture(*texture);
-  }
-
-  // grab the local coordinates of the sprite
-  sf::FloatRect spriteSize = splashSprite->getLocalBounds();
-
-  // set origin of sprite to center of image
-  splashSprite->setOrigin({spriteSize.size.x * 0.5f, spriteSize.size.y * 0.5f});
-  splashSprite->setScale({0.8f, 0.8f});
+  auto backgroundCSprite = background->AddComponent<CSprite>();
+  backgroundCSprite->Load(assetsDir.Get() + "splash/splash.png");
+  backgroundCSprite->SetDrawLayer(DrawLayer::Background);
 
   // position sprite to center of screen
   sf::Vector2f windowCenter = window.GetCenter();
-  splashSprite->setPosition({windowCenter.x, windowCenter.y});
+  background->transform->SetPosition({windowCenter.x, windowCenter.y});
+
+  objects.Add(background);
 }
 
 void SceneSplashScreen::OnActivate() { currentSeconds = 0.f; }
@@ -51,10 +52,17 @@ void SceneSplashScreen::SetSwitchToScene(unsigned int id) {
 }
 
 void SceneSplashScreen::Update(float deltaTime) {
+
+  objects.ProcessRemovals();
+  objects.ProcessNewObjects();
+  objects.Update(deltaTime);
+  
   currentSeconds += deltaTime;
   if (currentSeconds >= showForSeconds) {
     sceneStateMachine.SwitchTo(switchToState);
   }
 }
 
-void SceneSplashScreen::Draw(Window& window) { window.Draw(*splashSprite); }
+void SceneSplashScreen::Draw(Window& window) { 
+  objects.Draw(window); 
+  }

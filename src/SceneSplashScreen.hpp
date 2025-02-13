@@ -8,6 +8,7 @@
 #include "ResourceAllocator.hpp"
 #include "SceneStateMachine.hpp"
 #include "WorkingDirectory.hpp"
+#include "ObjectCollection.hpp"
 
 class SceneSplashScreen : public Scene {
  public:
@@ -22,14 +23,16 @@ class SceneSplashScreen : public Scene {
   void SetSwitchToScene(unsigned int id);
 
  private:
-  std::optional<sf::Sprite> splashSprite;
-  WorkingDirectory& workingDirectory;
+  WorkingDirectory &assetsDir;
   SceneStateMachine& sceneStateMachine;
-  Window& window;
+  Window &window;
   float showForSeconds;
   float currentSeconds;
   unsigned int switchToState;
-  ResourceAllocator<sf::Texture>& allocator;
+  ResourceAllocator<sf::Texture> &textureAllocator;
+
+  ObjectCollection objects;
+  SharedContext context;
 };
 
 #endif
