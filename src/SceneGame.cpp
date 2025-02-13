@@ -39,6 +39,24 @@ SceneGame::SceneGame(WorkingDirectory &workingDir,
 
 void SceneGame::OnCreate() {
 
+backgroundContext.input = nullptr;
+backgroundContext.objects = &objects;
+backgroundContext.spriteMapAllocator = nullptr;
+backgroundContext.textureAllocator = &textureAllocator;
+backgroundContext.window = &window;
+backgroundContext.workingDir = &assetsDir;
+
+auto background = std::make_shared<Object>(&backgroundContext);
+
+// position sprite to center of screen
+sf::Vector2f windowCenter = window.GetCenter();
+
+// add the texture to the allocator
+auto backgroundCSprite = background->AddComponent<CSprite>();
+backgroundCSprite->Load(assetsDir.Get() + "backgrounds/grid.jpg");
+backgroundCSprite->SetDrawLayer(DrawLayer::Background);
+
+objects.Add(background);
 
   // Zoom out at start to help see both characters, should be handled by automatically, this is a hot fix.
   sf::View view = window.GetView();

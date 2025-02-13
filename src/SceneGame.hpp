@@ -39,6 +39,7 @@ class SceneGame : public Scene {
   Window &window;
   SharedContext context;
   SharedContext context2;
+  SharedContext backgroundContext;
 
 };
 
