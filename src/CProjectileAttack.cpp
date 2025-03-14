@@ -56,6 +56,7 @@ void CProjectileAttack::SpawnProjectile() {
       owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.png",
       owner->context->workingDir->Get() + "characters/Fireball/FireballSpritesheet/FireballSpritesheet.json");
   projectile->transform->SetPosition(owner->transform->GetPosition());
+  sprite->SetDrawLayer(DrawLayer::Entities);
 
   projectile->AddComponent<CDirection>();
   animation = projectile->AddComponent<CAnimation>();
